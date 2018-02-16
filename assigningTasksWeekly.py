@@ -30,33 +30,28 @@ connection = mysql.connector.connect(
   #Our database details for connection
   )
 
+tasks = connection.cursor()
+tasksQuery = () #MySQL query for SELECTing TASKs IDs from the database
+tasks.execute(tasksQuery)
+taskLength = len(tasks)
 
-tasks = []
-taskLength = #MySQL (or sth else) to give me the total number of TASKS in the GROUP
 
-for i in range(0, taskLength):
-  next_task = Task(#MySQL to give the next task's details)
-  tasks.append(new_task)
+userIds = connection.cursor()
+userIdsQuery = () #MySQL query for SELECTing USER IDs of the group form the db
+userIds.execute(userIdsQuery)
+userIdsLength = len(userIds)
 
-users = []
-userLength = #MySQL to give me the total number of USERS in the GROUP
-
-for i in range(0, userLength):
-  next_user = User(#MySQL shit here to get his/her id and all)
-  next_userLength = #MySQL shit
-  for x in range(0, next_userLength):
-    next_user.add_task(#MySQL to get his/her task)
-  users.append(next_user)
-
+# Question: DO WE NEED ANYTHING ELSE FOR THIS PURPOSE?
 
 for i in range(0, taskLength):
   x = i
-  if(x >= userLength):
+  if(x >= userIdsLength):
     x = x - userLength
-  addTaskToUser(tasks[i], users[x])
+  addTaskToUser(tasks[i], userIds[x])
   #Since we, hopefully, handled adding the tasks to the users
   # we need to update the database, right?
 
-
+tasks.close()
+userIds.close()
 connection.close()
 
