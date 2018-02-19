@@ -1,0 +1,105 @@
+body
+{
+
+    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+
+
+    background: #1D201F; /*#9cb8b3; */
+    display: table;
+    width: 100%;
+}
+.centered
+{
+
+  /*  width: 320px; */
+    position:absolute;
+    top: 40%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+
+}
+
+.container1
+{
+    display: grid;
+     width: 100%;
+}
+
+@media screen and (max-width: 700px) {
+
+  h3
+  {
+       width: 70%;
+  }
+
+  .container1
+  {
+      display: grid;
+       width: 80%;
+  }
+
+  h1
+  {
+      width: 50%;
+  }
+
+}
+
+
+h1
+{
+
+     text-align: right;
+     letter-spacing:22px;
+     width: 100%;
+     color: #DF7F7F;
+}
+
+h3
+{
+     color: #EAD2AC;
+     letter-spacing: 1.5px;
+     font-weight: 100;
+}
+
+  input[type=text], input[type=password], select {
+
+        padding: 12px 20px;
+    /*    width: 320px; */
+        margin: 8px 0;
+        color: #1D201F;
+        background: #ead2ac;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+
+    button[type=submit], select {
+
+          padding: 12px 20px;
+      /*    width: 320px; */
+          margin: 8px 0;
+          color: #1D201F;
+          background: #DF7F7F;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          font-weight: 900;
+          font-size: 18px;
+      }
+
+
+      button[type="submit"]:hover
+      {
+	       background: #FF7F7F;
+       }
+/* MAKE IT SOMEHOW ZOOM WHEN HOVER ON 'SIGN UP'. DOESN'T WORK FOR NOW */
+a{
+    transition: transform .2s;
+}
+a:hover{
+transform: scale(1.5);
+}
