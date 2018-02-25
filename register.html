@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<!-- imports main font -->
+<!-- btw this will probably have to be php -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <title>RotatoR</title>
+</head>
+<body class = "inside">
+  <div class = "centered">
+
+  <h1>REGISTER</h1> <!-- WHY ISJN'T ROTATOR RESPONSIVE !??? -->
+
+ <!-- validate name via serverside cuz if you use JS, some people might have
+ js disabled and won't work -->
+  <form action="loginpage.php" >
+    <input type="text" name="name" placeholder="Name" class = "container1" style="background: white" id = "name"><br>
+    <input type="text" name="uname" placeholder="Username" class = "container1" style="background: white" ><br>
+    <input type="password" name="password" placeholder="Password" class = "container1" style="background: white" id="password"><br>
+    <input type="password" name="password" placeholder="Confirm password" class = "container1" style="background: white" id = "confirm_password"><br>
+    <!--this will lead to the page when a person has logged in-->
+
+    <!-- some js that checks if passwords match -->
+    <script>
+    var password = document.getElementById("password")
+    , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword(){
+      if(password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Passwords Don't Match");
+      } else {
+        confirm_password.setCustomValidity('');
+              }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+    </script>
+    <button type="submit" value="Submit" class = "container1">Sign Up</button>
+  </form>
+
+
+  <!-- Sign up button will lead to a page to register-->
+  <!-- formaction="loginpage.php"  -->
+
+  <h3>New to Rotator? <span style="font-weight: 900"><a href="https://google.com" style="text-decoration:none; color:#EAD2AC;">Sign Up</a></span> now!</h3>
+
+</div>
+</body>
+</html>
