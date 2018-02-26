@@ -72,14 +72,18 @@ h2
   text-align: left;
   width: 100%;
 }
-
-p
+/*Start of about styles*/
+.about_title
+{
+  font-size: 60px;
+}
+.about_p
 {
   color: #FFFAF0;
   width: 100%;
   text-align: center;
 }
-
+/*End of about styles*/
 h3
 {
      color: #EAD2AC;
