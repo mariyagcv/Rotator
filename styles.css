@@ -65,6 +65,20 @@ h1
      color: #DF7F7F;
 }
 
+h2
+{
+  color: #DCDCDC;
+  text-align: left;
+  width: 100%;
+}
+
+p
+{
+  color: #FFFAF0;
+  width: 100%;
+  text-align: center;
+}
+
 h3
 {
      color: #EAD2AC;
