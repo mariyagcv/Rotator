@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <?php 
-      require 'bootstrapHeader.php';
+      require 'bootstrapHeaders.php';
     ?>
     <title>Hello, world!</title>
   </head>
@@ -11,6 +11,7 @@
     <?php 
       require 'bootstrapBody.php';
       require 'menu.php';
+      echo 'test';
     ?>
     <div class="container">
       <!-- Content here -->
