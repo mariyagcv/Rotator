@@ -1,0 +1,36 @@
+<?php
+echo"<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n";
+echo"  <a class=\"navbar-brand\" href=\"#\">Navbar</a>\n";
+echo"  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n";
+echo"    <span class=\"navbar-toggler-icon\"></span>\n";
+echo"  </button>\n";
+echo"\n";
+echo"  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n";
+echo"    <ul class=\"navbar-nav mr-auto\">\n";
+echo"      <li class=\"nav-item active\">\n";
+echo"        <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n";
+echo"      </li>\n";
+echo"      <li class=\"nav-item\">\n";
+echo"        <a class=\"nav-link\" href=\"#\">Link</a>\n";
+echo"      </li>\n";
+echo"      <li class=\"nav-item dropdown\">\n";
+echo"        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n";
+echo"          Dropdown\n";
+echo"        </a>\n";
+echo"        <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n";
+echo"          <a class=\"dropdown-item\" href=\"#\">Action</a>\n";
+echo"          <a class=\"dropdown-item\" href=\"#\">Another action</a>\n";
+echo"          <div class=\"dropdown-divider\"></div>\n";
+echo"          <a class=\"dropdown-item\" href=\"#\">Something else here</a\n";
+echo"        </div>\n";
+echo"      </li>\n";
+echo"      <li class=\"nav-item\">\n";
+echo"        <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\n";
+echo"      </li>\n";
+echo"    </ul>\n";
+echo"    <form class=\"form-inline my-2 my-lg-0\">\n";
+echo"      <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\">\n";
+echo"      <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Search</button>\n";
+echo"    </form>\n";
+echo"</nav>\n";
+?>
