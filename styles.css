@@ -62,8 +62,29 @@ div.tasks
   color: #FFFFFF;
   /*Scroll part of tasks*/
   overflow: scroll;
+  position: absolute;
+  width: 350px;
+  height: 200px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
 }
 
+h1.taskClass
+{
+  text-align: center;
+  letter-spacing:28px;
+  /*22*/
+  width: 105%;
+  color: #DF7F7F;
+  font-size: 45px;
+}
+
+h1.taskList
+{
+  font-size: 28px;
+}
 /*News feed styles page ends here*/
 
 
