@@ -55,6 +55,17 @@ body
 
 }
 
+/*News Feed styles page begins here*/
+
+div.tasks
+{
+  color: #FFFFFF;
+  /*Scroll part of tasks*/
+  overflow: scroll;
+}
+
+/*News feed styles page ends here*/
+
 
 h1
 {
