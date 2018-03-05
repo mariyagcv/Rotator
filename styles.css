@@ -162,3 +162,52 @@ a{
 a:hover{
 transform: scale(1.5);
 }
+
+
+table, th, td
+{
+ text-align: center;
+ margin: auto;
+ padding: 1.2rem;
+ width: 50%;
+}
+
+th
+{
+ width: 50%;
+}
+
+
+.noTask
+{
+
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  backgorund-color: pink;
+}
+
+
+
+.testClass
+{
+
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  width: 200px;
+}
+.weekDays
+{
+
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  width: 200px;
+}
