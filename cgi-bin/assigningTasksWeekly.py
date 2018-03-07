@@ -1,6 +1,7 @@
-import mysql.connector
 from datetime import timedelta, date, datetime
-from rotator import Task, User, User_Group_Log, User_Task_Log
+import mysql.connector
+import random
+from rotator import Task, SimpleUser, User, User_Group_Log, User_Task_Log
 
 # A few definitions
   
@@ -56,71 +57,63 @@ def assignTasksToUsers(tasks, users):
     x = i
     if(x >= len(users)):
       x = x - len(users)
-    if(tasks[i].compareIdWithUser(users[x])):
-      tasks[i].deadline = deadlineArray[i]
-      users[x].add_task(tasks[i])
-   # else:
-     #   print "Error: There is a user (or a task) with a different group id!"
+  #  tasks[i].deadline = deadlineArray[i]
+   # users[x].add_task(tasks[i])
+    #add the assignment of task to db
+    deadlineStr = deadlineArray[i].date().isoformat()
+    randomId = random.randint(1, 16777216)
+    cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
+    while(cursor.rowcount ):
+      randomId = random.randint(1, 16777216)
+      cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
+
+    cursor.execute("INSERT INTO User_Task_Log(ID, Deadline, User_ID, Task_ID) VALUES (%s, %s, %s, %s)" % (randomId, deadlineStr, users[x].id, tasks[i].id) )
 
 
 #Actual code starts here:
 def query(new_groupID, new_dateOfCall):
-  global groupID
   groupID = new_groupID
   global dateOfCall
   dateOfCall = new_dateOfCall
   connection = mysql.connector.connect(
     user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
     )
-
-  cursor= connection.cursor()
+  global cursor
+  cursor= connection.cursor(buffered=True)
   cursor.execute("SELECT Task.ID, Task.Name, Task.Difficulty FROM Task WHERE Task.Group_ID = %s ORDER BY Task.Difficulty DESC" % groupID
                          )#MySQL query for SELECTing TASKs from the database
   tasks = cursor.fetchall()
-                        
- # for Task.ID in tasks:
- #  print Task.ID
-  #tasks = []
-  #tasks.append(Task(0, "EasyTaskId0", 10, 0))
-  #tasks.append(Task(1, "EasiestTaskId1", 0, 0))
-  #tasks.append(Task(3, "HardTaskId3", 30, 0))
-  #tasks.append(Task(4, "MediumTaskId4", 20, 0))
-  #tasks.append(Task(5, "HardestTaskId5", 40, 0))
-  #tasks.append(Task(6, "MediumTaskId6", 20, 0))
-  #users = []
-  #users.append(User(0,"UserId0ScoreHigh", 0, 40))
-  #users.append(User(1, "UserId1ScoreLow", 0, 10))
-  #users.append(User(2, "UserId2ScoreHigh", 0, 40))
-  #users.append(User(3, "UserId3ScoreMedium", 0, 20))
+  newTasks = []
+  
+  for element in tasks:
+    task = Task(element[0], element[1], element[2], groupID)
+    newTasks.append(task)
+  
+  tasks = newTasks
 
+#  cursor.execute("SELECT Task.Name, Task.Difficulty, User_Task_Log.Deadline, User_Task_Log.Submitted, User_Task_Log.Submitted_Date, User_Task_Log.Verified, User_Task_Log.Verified_Date FROM User_Task_Log INNER JOIN Task ON User_Task_Log.Task_ID = Task.ID WHERE Task.Group_ID = %s ORDER BY Task.Difficulty ASC" % groupID) #MySQL query for SELECTing USER of the group form the db
 
-  cursor.execute("SELECT Task.Name, Task.Difficulty, User_Task_Log.Deadline, User_Task_Log.Submitted, User_Task_Log.Submitted_Date, User_Task_Log.Verified, User_Task_Log.Verified_Date FROM User_Task_Log INNER JOIN Task ON User_Task_Log.Task_ID = Task.ID WHERE Task.Group_ID = %s ORDER BY Task.Difficulty ASC" % groupID) #MySQL query for SELECTing USER of the group form the db
+  cursor.execute("  SELECT User.ID, User.Name FROM User INNER JOIN User_Group_Log ON User.ID = User_Group_Log.User_ID WHERE User_Group_Log.Group_ID = %s " % groupID
+  )
+
   users = cursor.fetchall()
+  newUsers = []
   
- # for user in users:
-   # print user
+  for element in users:
+    user = SimpleUser(element[0], element[1])
+    newUsers.append(user)
+    
+  users = newUsers
 
-  # Question: DO WE NEED ANYTHING ELSE FOR THIS PURPOSE?
-  #Answer = YES! Need to sort the users and tasks just-in-case
-
-  #bubble_sort_users(users)
-
-  #bubble_sort_tasks(tasks)
-  
-  taskArray = []
-  for task in tasks:
-    newTask = SimpleTask(task[0], task[1], task[2])
-    taskArray.append(newTask)
-
-  assignTasksToUsers(taskArray, users)
+  assignTasksToUsers(tasks, users)
     #Since we, hopefully, handled adding the tasks to the users
     # we need to update the database, right?
 
-  for user in users:
-      print user.name
-      for userTask in user.userTasks:
-          print userTask.name
-          
-  tasks.close()
-  users.close()
+#  for user in users:
+ #     print user.name
+  #    for userTask in user.userTasks:
+   #       print userTask.name
+ 
+  
+  cursor.close()
   connection.close()
