@@ -28,8 +28,8 @@ VALUES (%s, %s, %s, %s, %s)
 """ % randomId, dataField.getvalue("name"), password, dataField.getvalue("e-mail"),
 dataField.getvalue("phone"))
 
-#some HTML here probably ^^
-
 connection.commit()
 cursor.close()
 connection.close()
+
+#some HTML here probably ^^

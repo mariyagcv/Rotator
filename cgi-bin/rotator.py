@@ -9,19 +9,21 @@ class Task: #can have more stuff depending on the database structure
   def compareIdWithUser(self, userToCompare):
     return self.group_id == userToCompare.group_id
 
-"""    
-class SimpleTask:
-  def __init__(self, new_task_id, new_name, new_diff):
-    self.task_id = new_task_id
+    
+class LongerTask:
+  def __init__(self, new_id, new_name, new_difficulty, new_deadline, new_submitted, new_submitted_date, new_verified, new_verified_date, 
+    self.id = new_id
     self.name = new_name
     self.difficulty = new_diff
-    self.deadline = None
-    self.verified = None
-    self.group_id = None
+    self.deadline = new_deadline
+    self.submitted = new_submitted
+    self.submitted_date = new_submitted_date
+    self.verified = new_verified
+    self.verified_date = new_verified_date
     
   def compareIdWithUser(self, userToCompare):
     return self.group_id == userToCompare.group_id
-"""
+
     
 class User: #can have more stuff depending on the database structure
   def __init__(self, new_id, new_password, new_name, new_email, new_phone, new_group_id):

@@ -69,7 +69,8 @@ def assignTasksToUsers(tasks, users):
       cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
 
     data = [randomId, deadlineStr, users[x].id, tasks[i].id]
-    cursor.execute("INSERT IGNORE INTO User_Task_Log(ID, Deadline, User_ID, Task_ID) VALUES (%s, %s, %s, %s)", (data) )
+    cursor.execute("INSERT INTO User_Task_Log(ID, Deadline, User_ID, Task_ID) VALUES (%s, %s, %s, %s)", (data) )
+    connection.commit()
 
 
 #Actual code starts here:
@@ -115,7 +116,6 @@ def query(new_groupID, new_dateOfCall):
  #     print user.name
   #    for userTask in user.userTasks:
    #       print userTask.name
-  connection.commit()
   
   cursor.close()
   connection.close()
