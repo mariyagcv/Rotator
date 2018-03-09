@@ -16,10 +16,10 @@ connection = mysql.connector.connect(
 
 cursor= connection.cursor()
 
-randomId = random.randint(1, 16777216)
+randomId = random.randint(1, 8388607)
 cursor.execute("SELECT ID FROM User WHERE ID = %s" % randomId)
 while(cursor.rowcount):
-  randomId = random.randint(1, 16777216)
+  randomId = random.randint(1, 8388607)
   cursot.execute("SELECT ID FROM User WHERE ID = %s" % randomId)
   
 cursor.execute("""
@@ -30,6 +30,6 @@ dataField.getvalue("phone"))
 
 #some HTML here probably ^^
 
-
+connection.commit()
 cursor.close()
 connection.close()

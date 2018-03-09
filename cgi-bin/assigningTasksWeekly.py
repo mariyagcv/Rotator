@@ -60,14 +60,16 @@ def assignTasksToUsers(tasks, users):
   #  tasks[i].deadline = deadlineArray[i]
    # users[x].add_task(tasks[i])
     #add the assignment of task to db
-    deadlineStr = deadlineArray[i].date().isoformat()
-    randomId = random.randint(1, 16777216)
+    #deadlineStr = deadlineArray[i].date().isoformat()
+    deadlineStr = deadlineArray[i].strftime("%Y-%m-%d %H:%M:%S")
+    randomId = random.randint(1, 8388607)
     cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
     while(cursor.rowcount ):
-      randomId = random.randint(1, 16777216)
+      randomId = random.randint(1, 8388607)
       cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
 
-    cursor.execute("INSERT INTO User_Task_Log(ID, Deadline, User_ID, Task_ID) VALUES (%s, %s, %s, %s)" % (randomId, deadlineStr, users[x].id, tasks[i].id) )
+    data = [randomId, deadlineStr, users[x].id, tasks[i].id]
+    cursor.execute("INSERT IGNORE INTO User_Task_Log(ID, Deadline, User_ID, Task_ID) VALUES (%s, %s, %s, %s)", (data) )
 
 
 #Actual code starts here:
@@ -93,7 +95,7 @@ def query(new_groupID, new_dateOfCall):
 
 #  cursor.execute("SELECT Task.Name, Task.Difficulty, User_Task_Log.Deadline, User_Task_Log.Submitted, User_Task_Log.Submitted_Date, User_Task_Log.Verified, User_Task_Log.Verified_Date FROM User_Task_Log INNER JOIN Task ON User_Task_Log.Task_ID = Task.ID WHERE Task.Group_ID = %s ORDER BY Task.Difficulty ASC" % groupID) #MySQL query for SELECTing USER of the group form the db
 
-  cursor.execute("  SELECT User.ID, User.Name FROM User INNER JOIN User_Group_Log ON User.ID = User_Group_Log.User_ID WHERE User_Group_Log.Group_ID = %s " % groupID
+  cursor.execute("SELECT User.ID, User.Name FROM User INNER JOIN User_Group_Log ON User.ID = User_Group_Log.User_ID WHERE User_Group_Log.Group_ID = %s " % groupID
   )
 
   users = cursor.fetchall()
@@ -113,7 +115,7 @@ def query(new_groupID, new_dateOfCall):
  #     print user.name
   #    for userTask in user.userTasks:
    #       print userTask.name
- 
+  connection.commit()
   
   cursor.close()
   connection.close()
