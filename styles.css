@@ -84,6 +84,11 @@ h1.taskClass
 h1.taskList
 {
   font-size: 28px;
+  border-radius: 25px;
+  background: #FF0000;
+  padding: 20px;
+  width: 200px;
+  height: 150px;
 }
 /*News feed styles page ends here*/
 
