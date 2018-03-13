@@ -57,21 +57,21 @@ body
 
 /*News Feed styles page begins here*/
 
-div.tasks
+.tasks
 {
   color: #FFFFFF;
   /*Scroll part of tasks*/
   overflow: scroll;
   position: absolute;
-  width: 350px;
-  height: 200px;
+  width: 50%;
+  height: 75%;
   z-index: 15;
-  top: 50%;
-  left: 50%;
+  top: 30%;
+  left: 49%;
   margin: -100px 0 0 -150px;
 }
 
-h1.taskClass
+.taskClass
 {
   text-align: center;
   letter-spacing:28px;
@@ -81,14 +81,15 @@ h1.taskClass
   font-size: 45px;
 }
 
-h1.taskList
+.taskList
 {
   font-size: 28px;
   border-radius: 25px;
+  border-color: white;
   background: #FF0000;
   padding: 20px;
-  width: 200px;
-  height: 150px;
+  width: 50%;
+  height: 25%;
 }
 /*News feed styles page ends here*/
 
