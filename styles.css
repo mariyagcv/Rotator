@@ -169,7 +169,7 @@ a:hover{
 transform: scale(1.5);
 }
 
-/*menu styles
+/*menu styles*/
 
 ul {
     list-style-type: none;
@@ -195,7 +195,7 @@ li a:hover {
     background-color: #ead2ac;
 }
 
-end menu styles
+/*end menu styles
   */
 table, th, td
 {
