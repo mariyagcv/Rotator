@@ -11,7 +11,7 @@ class Task: #can have more stuff depending on the database structure
 
     
 class LongerTask:
-  def __init__(self, new_id, new_name, new_difficulty, new_deadline, new_submitted, new_submitted_date, new_verified, new_verified_date, 
+  def __init__(self, new_id, new_name, new_diff, new_deadline, new_submitted, new_submitted_date, new_verified, new_verified_date):
     self.id = new_id
     self.name = new_name
     self.difficulty = new_diff
