@@ -169,7 +169,34 @@ a:hover{
 transform: scale(1.5);
 }
 
+/*menu styles
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #DF7F7F;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #1D201F;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #ead2ac;
+}
+
+end menu styles
+  */
 table, th, td
 {
  text-align: center;
