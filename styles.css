@@ -28,6 +28,12 @@ body
 
 }
 
+.titleRegister
+{
+  /*To make orientation of title in the center*/
+  letter-spacing: 21px;
+}
+
 /* had container1 after centerd in the html but kinda useless */
 .container1
 {
@@ -161,7 +167,7 @@ h3
       {
 	       background: #FF7F7F;
        }
-/* MAKE IT SOMEHOW ZOOM WHEN HOVER ON 'SIGN UP'. DOESN'T WORK FOR NOW 
+/* MAKE IT SOMEHOW ZOOM WHEN HOVER ON 'SIGN UP'. DOESN'T WORK FOR NOW
 a{
     transition: transform .2s;
 }
@@ -234,7 +240,7 @@ transform: scale(1.5);
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
-} 
+}
 
 /* Fixed/sticky icon bar (vertically aligned 50% from the top of the screen) */
 .icon-bar {
