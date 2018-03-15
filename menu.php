@@ -1,4 +1,5 @@
 <?php
+echo '<link rel="stylesheet" href="menuStyle.css">';
 echo '<div id="mySidenav" class="sidenav">';
 echo '  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
 echo '  <a href="timetable.php">Timetable</a>';
