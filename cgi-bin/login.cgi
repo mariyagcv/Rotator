@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 
-print "Content-Type: text/html"
-print
-print '<link rel="stylesheet" href="../styles.css">'
-print "<TITLE>Login</TITLE>"
-print "<H1>Login page</H1>"
-
 import mysql.connector
 import bcrypt
 import cgi
@@ -27,9 +21,16 @@ table =  cursor.fetchall()[0]
 hashed = table[0]
 userId = table[1]
 if bcrypt.checkpw(password, hashed):
-  import subprocess
-  subprocess.call(["php", "./setCookie.php", str(userId)])
+  import Cookie
+  c = Cookie.SimpleCookie()
+  c['Rotator'] = userId
+  c['Rotator']['expires'] = (datetime.datetime.now() + datetime.timedelta(minutes= 30) ).ctime()
+  print c
+  print "Content-Type: text/html\n\n"
   print """
+'<link rel="stylesheet" href="../styles.css">'
+"<TITLE>Login</TITLE>"
+"<H1>Login page</H1>"
     <head> 
       <meta http-equiv="refresh" content="0;url=./timetable.cgi" /> 
       <h1>You are going to be redirected</h1> 

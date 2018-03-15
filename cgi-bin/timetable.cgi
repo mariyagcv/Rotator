@@ -1,23 +1,34 @@
 #!/usr/bin/env python
 print "Content-Type: text/html"
 print
+print ''' <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css"> '''
 
 import cgi
-import cookie
-from datetime import datetime
+import Cookie
+import os
+from datetime import datetime, timedelta
 import mysql.connector
 from rotator import LongerTask
 
-print "<TITLE>RotatoR</TITLE>"
 
-if not cookie.status("http://10.2.232.136/Rotator/cgi-bin/login.cgi"):
-  print "NOPE"
-#import subprocess
-#subprocess.call(["php", "./checkCookie.php"])
+#check for cookie and use it assign user ID - should be everywhere at the beggining!
+if not 'HTTP_COOKIE' in os.environ:
+  print '<h1>Are you logged in?</h1>'
+  print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
+else:
+  c = Cookie.SimpleCookie()
+  c.load(os.environ.get('HTTP_COOKIE'))
+  
+  try:
+    global userId
+    userId = c['Rotator'].value
+    print "<TITLE>RotatoR</TITLE>"
+  except KeyError:
+    print '<h1>Are you logged in?</h1>'
+    print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
+#end of that section 
 
-#dataField = cgi.FieldStorage()
-
-userId = 1
 
 connection = mysql.connector.connect(
   user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
@@ -73,8 +84,6 @@ for task in tasks:
         sunEveTask.append(task)
 
 display = '''
-<link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
-<link rel="stylesheet" href="../styles.css">
 
 <html>
 <body class = "inside">
@@ -181,7 +190,7 @@ else:
   for task in sunMorTask:
     addition += task.name + "<br>"
 display += addition +'''</td>
-    <td class = "'''
+    <td class = '''
 if(len(sunEveTask) == 0):
   addition = ' "noTask">No task'
 else:

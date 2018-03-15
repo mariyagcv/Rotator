@@ -32,7 +32,7 @@ except Exception:
   pass
   
 cursor.execute("""
-INSERT INTO User (ID, Name, Username, Password_Hash, Email)
+INSERT INTO User (ID, Name,Username, Password_Hash, Email)
 VALUES (%s, %s, %s, %s, %s) 
 """ % (randomId, "\"" + dataField.getvalue("name") + "\"", "\"" + dataField.getvalue("username") + "\"" ,"\"" + password + "\"", "\"" + dataField.getvalue("email") + "\"") )
 

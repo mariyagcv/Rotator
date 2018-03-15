@@ -61,13 +61,15 @@ def assignTasksToUsers(tasks, users):
    # users[x].add_task(tasks[i])
     #add the assignment of task to db
     #deadlineStr = deadlineArray[i].date().isoformat()
-    deadlineStr = deadlineArray[i].strftime("%Y-%m-%d %H:%M:%S")
+    deadlineStr = deadlineArray[len(users[x].userTasks)].strftime("%Y-%m-%d %H:%M:%S")
     randomId = random.randint(1, 8388607)
     cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
     while(cursor.rowcount ):
       randomId = random.randint(1, 8388607)
       cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
 
+    tasks[i].deadline = deadlineStr
+    users[x].add_task(tasks[i])
     data = [randomId, deadlineStr, users[x].id, tasks[i].id]
     cursor.execute("INSERT INTO User_Task_Log(ID, Deadline, User_ID, Task_ID) VALUES (%s, %s, %s, %s)", (data) )
     connection.commit()
@@ -78,6 +80,7 @@ def query(new_groupID, new_dateOfCall):
   groupID = new_groupID
   global dateOfCall
   dateOfCall = new_dateOfCall
+  global connection
   connection = mysql.connector.connect(
     user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
     )
