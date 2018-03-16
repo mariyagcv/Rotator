@@ -2,7 +2,7 @@
 print "Content-Type: text/html"
 print
 print ''' <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
-<link rel="stylesheet" href="../styles.css"> '''
+<link rel="stylesheet" href="/Rotator/styles.css"> '''
 
 import cgi
 import Cookie
@@ -86,6 +86,25 @@ for task in tasks:
 display = '''
 
 <html>
+
+<body class = "inside" id="uberbar">
+<script src="/Rotator/menuScript.js"></script>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="/Rotator/cgi-bin/timetable.cgi">Timetable</a>
+  <a href="/Rotator/cgi-bin/newsfeed.cgi">Newsfeed</a>
+  <a href="/Rotator/cgi-bin/settings.cgi">Settings</a>
+  <a href="/Rotator/about.html">About</a>
+  <a href="/Rotator/cgi-bin/logout.cgi">Log out</a>
+</div>
+<div id="rest">
+  <span onclick="openNav()">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="menu-icon">
+      <a href="#" class="btn"><i class="fa fa-bars"></i></a>
+    </div>
+  </span>
+
 <body class = "inside">
   <div class = "centeredTimeTable">
 
@@ -206,6 +225,7 @@ display += addition +'''</td>
 
 </div>
 </body>
+</div>
 </html>
 '''
 
