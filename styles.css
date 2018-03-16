@@ -66,6 +66,7 @@ body
 .tasks
 {
   color: #FFFFFF;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   /*Scroll part of tasks*/
   overflow: scroll;
   position: absolute;
@@ -73,7 +74,7 @@ body
   height: 75%;
   z-index: 15;
   top: 30%;
-  left: 49%;
+  left: 47%;
   margin: -100px 0 0 -150px;
 }
 
@@ -92,7 +93,7 @@ body
   font-size: 28px;
   border-radius: 25px;
   border-color: white;
-  background: #FF0000;
+  background: #3399FF;
   padding: 20px;
   width: 50%;
   height: 25%;
