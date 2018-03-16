@@ -24,7 +24,7 @@ else:
     print "<TITLE>News Feed</TITLE>"
   except KeyError:
     print '<h1>Are you logged in?</h1>'
-    print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
+    print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
 #end of that section 
 
 connection = mysql.connector.connect(
@@ -33,13 +33,16 @@ connection = mysql.connector.connect(
 
 cursor = connection.cursor(buffered = True)
 
-cursor.execute("SELECT Group_ID FROM User_Group_Log WHERE User_ID = %s" % (userId) )
+try:
+  cursor.execute("SELECT Group_ID FROM User_Group_Log WHERE User_ID = %s" % (userId) )
+  group_Id = cursor.fetchall()[0][0]
+  cursor.execute("SELECT User_ID FROM User_Group_Log WHERE Group_ID = %s" % (group_Id) )
+  userIds = cursor.fetchall() # ((userId), (userId)...)
+except:
+  print '<h1>You are not in any group!</h1> <meta http-equiv="refresh" content="3;url=/Rotator/cgi-bin/settings.cgi" />'
+  quit()
 
-group_Id = cursor.fetchall()[0][0]
 
-cursor.execute("SELECT User_ID FROM User_Group_Log WHERE Group_ID = %s" % (group_Id) )
-
-userIds = cursor.fetchall() # ((userId), (userId)...)
 
 users = []
 
@@ -52,13 +55,19 @@ for user in userIds:
 cursor.execute("SELECT ID, Name, Difficulty FROM Task WHERE Group_ID = %s" % (group_Id) )
 
 tasks = cursor.fetchall() # tasks contains now tuples in form (id, name, diff)
+if len(tasks) == 0:
+  print '<h1> Your group has no tasks assingned to it!</h1><meta http-equiv="refresh" content="3;url=/Rotator/cgi-bin/settings.cgi" />'
+  quit()
 
 userTaskLogs = []
 
 for i in range(0, len(users) ):
-  cursor.execute("SELECT Deadline, Submitted, Submitted_Date, Verified, Verified_Date, User_ID, Task_ID FROM User_Task_Log WHERE User_ID = %s" % (users[i][0]) )
-  fetched = cursor.fetchall()[0]
-  userTaskLogs.append((fetched, users[i][1]) )
+  try:
+    cursor.execute("SELECT Deadline, Submitted, Submitted_Date, Verified, Verified_Date, User_ID, Task_ID FROM User_Task_Log WHERE User_ID = %s" % (users[i][0]) )
+    fetched = cursor.fetchall()[0]
+    userTaskLogs.append((fetched, users[i][1]) )
+  except:
+    pass
   # ((deadline, sub, sub_date, ver, ver_date, uID, tID), uName) (...)
 
 html = '''
@@ -117,6 +126,9 @@ for i in range(0, len(newsfeed) - 2):
 
 for news in newsfeed:
   html += '<p class = "taskList">' + news[0] + '</p>'
+  
+if len(userTaskLogs) == 0:
+  html += '<p class = "taskList"> There are no tasks assigned to your group! Run the assignment! </p>'
 
 html += '''
     </div>

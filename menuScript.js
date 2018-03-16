@@ -9,3 +9,4 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0px";
     document.getElementById("rest").style.marginLeft = "0px";
 } 
+

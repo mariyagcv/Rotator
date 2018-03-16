@@ -15,7 +15,7 @@ from rotator import LongerTask
 #check for cookie and use it assign user ID - should be everywhere at the beggining!
 if not 'HTTP_COOKIE' in os.environ:
   print '<h1>Are you logged in?</h1>'
-  print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
+  print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
 else:
   c = Cookie.SimpleCookie()
   c.load(os.environ.get('HTTP_COOKIE'))

@@ -4,6 +4,8 @@ print "Content-Type: text/html"
 print
 print "<TITLE> Signup </TITLE>"
 print "<H1>Redirecting...</H1>"
+print ''' <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
+<link rel="stylesheet" href="/Rotator/styles.css"> '''
 
 import bcrypt
 import cgi
@@ -13,7 +15,7 @@ import random
 
 dataField = cgi.FieldStorage()
 
-password = dataField.getvalue("password")[0]
+password = dataField.getvalue("password")
 password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
 
 connection = mysql.connector.connect(
@@ -32,9 +34,9 @@ except Exception:
   pass
   
 cursor.execute("""
-INSERT INTO User (ID, Name,Username, Password_Hash, Email)
-VALUES (%s, %s, %s, %s, %s) 
-""" % (randomId, "\"" + dataField.getvalue("name") + "\"", "\"" + dataField.getvalue("username") + "\"" ,"\"" + password + "\"", "\"" + dataField.getvalue("email") + "\"") )
+INSERT INTO User (ID, Username, Password_Hash, Email)
+VALUES (%s, %s, %s, %s) 
+""" % (randomId, "\"" + dataField.getvalue("username") + "\"" ,"\"" + password + "\"", "\"" + dataField.getvalue("email") + "\"") )
 
 connection.commit()
 cursor.close()
@@ -42,7 +44,7 @@ connection.close()
 
 print """
   <head> 
-    <meta http-equiv="refresh" content="5;url=../timetable.html" /> 
+    <meta http-equiv="refresh" content="0;url=/Rotator/cgi-bin/timetable.cgi" /> 
     <title>You are going to be redirected</title> 
 </head> 
 """

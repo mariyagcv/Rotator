@@ -68,7 +68,7 @@ body
   color: #FFFFFF;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   /*Scroll part of tasks*/
-  overflow: scroll;
+  overflow-y: scroll;
   position: absolute;
   width: 50%;
   height: 75%;
@@ -83,20 +83,22 @@ body
   text-align: center;
   letter-spacing:28px;
   /*22*/
+  position: absolute;
   width: 105%;
   color: #DF7F7F;
   font-size: 45px;
 }
 
-.taskList
+
+.tasks .taskList
 {
   font-size: 28px;
   border-radius: 25px;
   border-color: white;
   background: #3399FF;
   padding: 20px;
-  width: 50%;
-  height: 25%;
+  width: 500px;
+  height: 250px;
 }
 /*News feed styles page ends here*/
 

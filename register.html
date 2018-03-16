@@ -14,7 +14,7 @@
  <!-- validate name via serverside cuz if you use JS, some people might have
  js disabled and won't work -->
   <form action="cgi-bin/signup.cgi" method="post">
-    <input type="text" name="name" placeholder="Name" class = "container1" style="background: white" id = "name"><br>
+    <input type="text" name="username" placeholder="Username" class = "container1" style="background: white" id = "Username"><br>
     <input type="text" name="email" placeholder="E-mail" class = "container1" style="background: white" id = "email"><br>
     <input type="password" name="password" placeholder="Password" class = "container1" style="background: white" id="password"><br>
     <input type="password" name="password2" placeholder="Confirm password" class = "container1" style="background: white" id = "confirm_password"><br>
@@ -40,14 +40,12 @@
     <button type="submit" value="Submit" class = "container1">Sign Up</button>
   </form>
 
-  <h2 <span style="font-weight: 300"><a href="https://google.com" style="text-decoration:none; color:#000000; font-size: 20px;"> Already part of Rotator?
-      <a id = "logIn" href="https://google.com" style="text-decoration:none; color:#000000; font-size: 20px;"><span style="font-weight: 600">Login now!</h2>
+ <!-- <h2 <span style="font-weight: 300"><a style="text-decoration:none; color:#000000; font-size: 20px;"> Already part of Rotator?
+      <a id = "logIn" href="/Rotator/login.html" style="text-decoration:none; color:#000000; font-size: 20px;"><span style="font-weight: 600">Login now!</h2> -->
+        <p> Already part of Rotator?
+      <a id = "logIn" href="/Rotator/login.html" style="text-decoration:none; color:#000000; font-size: 20px;"><span style="font-weight: 600">Login now!</p>
 
-        <script type="text/javascript">
-           document.getElementById("logIn").onclick = function () {
-           location.href = "./login.html";
-          };
-        </script>
+
 
 
   <!-- Sign up button will lead to a page to register-->
