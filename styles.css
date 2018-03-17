@@ -1,4 +1,9 @@
-body
+html
+{
+    font-size: 15px;
+}
+
+body #inside
 {
 
     font-family: 'Source Sans Pro', sans-serif;
@@ -7,7 +12,7 @@ body
     display: table;
     width: 100%;
 }
-.inside {
+#inside{
     background: #ead2ac;
 }
 .centered
@@ -26,12 +31,6 @@ body
     margin-top: -50px;
     margin-left: -100px; */
 
-}
-
-.titleRegister
-{
-  /*To make orientation of title in the center*/
-  letter-spacing: 21px;
 }
 
 /* had container1 after centerd in the html but kinda useless */
@@ -65,16 +64,15 @@ body
 
 .tasks
 {
-  color: #FFFFFF;
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #FFFFFF ;
   /*Scroll part of tasks*/
-  overflow-y: scroll;
+  overflow: scroll;
   position: absolute;
   width: 50%;
   height: 75%;
   z-index: 15;
   top: 30%;
-  left: 47%;
+  left: 49%;
   margin: -100px 0 0 -150px;
 }
 
@@ -83,34 +81,37 @@ body
   text-align: center;
   letter-spacing:28px;
   /*22*/
-  position: absolute;
   width: 105%;
   color: #DF7F7F;
   font-size: 45px;
 }
 
-
-.tasks .taskList
+.taskList
 {
   font-size: 28px;
   border-radius: 25px;
   border-color: white;
-  background: #3399FF;
+  background: #FF0000;
   padding: 20px;
-  width: 500px;
-  height: 250px;
+  width: 50%;
+  height: 25%;
 }
 /*News feed styles page ends here*/
 
-
-h1
+h1 
 {
-
+     
      text-align: center;
      letter-spacing:24px;
      /*22*/
      width: 100%;
      color: #DF7F7F;
+}
+
+#override
+{
+    line-height: 1.5;
+    font-weight: 800;
 }
 
 h2
@@ -170,134 +171,26 @@ h3
       {
 	       background: #FF7F7F;
        }
-/* MAKE IT SOMEHOW ZOOM WHEN HOVER ON 'SIGN UP'. DOESN'T WORK FOR NOW
+/* MAKE IT SOMEHOW ZOOM WHEN HOVER ON 'SIGN UP'. DOESN'T WORK FOR NOW */
 a{
     transition: transform .2s;
 }
 a:hover{
 transform: scale(1.5);
 }
-*/
 
-/*menu styles*/
 
-.btn {
-    background-color: #1D201F;
-    border: none;
-    color: #EAD2AC;
-    padding: 12px 16px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-/* Darker background on mouse-over */
-.btn:hover {
-    background-color: #000000;
-}
-
- /* The side navigation menu */
-.sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-}
-
-/* The navigation menu links */
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    color: #EAD2AC;
-}
-
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#rest {
-    transition: margin-left .5s;
-    padding: 20px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-}
-
-/* Fixed/sticky icon bar (vertically aligned 50% from the top of the screen) */
-.icon-bar {
-  position: fixed;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-/* Style the icon bar links */
-.icon-bar a {
-  display: block;
-  text-align: center;
-  padding: 16px;
-  transition: all 0.3s ease;
-  color: white;
-  font-size: 20px;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #DF7F7F;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: #1D201F;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover {
-    background-color: #ead2ac;
-}
-
-/*end menu styles
-  */
-table, th, td
+#myTable, #myTable th, #myTable td
 {
  text-align: center;
  margin: auto;
  padding: 1.2rem;
- width: 50%;
+ /*width: 50%; */
+border-collapse: separate;
+border-spacing: 2px;
 }
 
+/*the fuck? */
 th
 {
  width: 50%;
@@ -313,6 +206,7 @@ th
   border-bottom: 1px solid black;
   border-right: 1px solid black;
   backgorund-color: pink;
+  
 }
 
 
@@ -320,12 +214,12 @@ th
 .task
 {
 
-  border-left: none;
+  border-left: none ;
   border-top: none;
   border-right: none;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
-  width: 200px;
+  width: 350px;
   background-color: #D1DEDE;
 }
 
@@ -336,7 +230,7 @@ th
   border-right: none;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
-  width: 200px;
+  width: 350px;
   background-color: #a8a4a6;
 }
 .weekDays
@@ -347,7 +241,8 @@ th
   border-top: none;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
-  width: 200px;
+  width: 350px;
   background-color: #DF7F7F;
   color: white;
 }
+
