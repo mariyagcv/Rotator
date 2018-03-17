@@ -2,6 +2,7 @@
 # based on different actions performed by app/users
 
 # !ONLY WORKS ON A MACHINE WHERE NEEDED LIBRARIES ARE DOWNLOADED!
+# See "Step 2" here: https://developers.google.com/gmail/api/quickstart/python
 
 # import what we need
 from __future__ import print_function
