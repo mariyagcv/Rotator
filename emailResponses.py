@@ -18,6 +18,8 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 
+import mysql.connector
+
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
@@ -40,12 +42,9 @@ APPLICATION_NAME = 'Gmail API Python Quickstart'
 # Parameters: name of the reciever,
 #             email of the reciever,
 #
-def mailResponseToAssignment(name, email):
+def mailResponseToAssignment(name, email): #taskID):
 
-  # some needed housekeeping
-  #credentials = get_credentials()
-  #http = credentials.authorize(httplib2.Http())
-  #service = discovery.build('gmail', 'v1', http=http)
+  
 
   # create draft for one day prior notification
   oneDayPriorSubject = "Tomorrow's Deadline"
@@ -63,12 +62,13 @@ def mailResponseToAssignment(name, email):
   oneDayAfterTextID = create_draft("me", create_message(email, oneDayAfterSubject, oneDayAfterText))
 
   #for testing
-  draft_ids = []
-  draft_ids.append(oneDayPriorTextID)
-  draft_ids.append(deadlineDayTextID)
-  draft_ids.append(oneDayAfterTextID)
-  return draft_ids
-  #PUT IDS TO THE DATABASE
+  #draft_ids = []
+  #draft_ids.append(oneDayPriorTextID)
+  #draft_ids.append(deadlineDayTextID)
+  #draft_ids.append(oneDayAfterTextID)
+  #return draft_ids
+
+  # !!! PUT IDS TO THE DATABASE !!!
 
 
 # CHECKED APART FROM FREEZING
