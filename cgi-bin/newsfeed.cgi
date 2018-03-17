@@ -14,6 +14,7 @@ from datetime import datetime
 if not 'HTTP_COOKIE' in os.environ:
   print '<h1>Are you logged in?</h1>'
   print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
+  quit()
 else:
   c = Cookie.SimpleCookie()
   c.load(os.environ.get('HTTP_COOKIE'))
@@ -25,6 +26,7 @@ else:
   except KeyError:
     print '<h1>Are you logged in?</h1>'
     print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
+    quit()
 #end of that section 
 
 connection = mysql.connector.connect(
@@ -106,13 +108,13 @@ for userTaskLog in userTaskLogs:
       # (string, datetime)
     else: # submition before deadline
       if userTaskLog[0][3] == 0: # not verified yet
-        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week!' % (userTaskLog[1], taskName, userTaskLog[0][2]), userTaskLog[0][2] ))
+        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week! <br> <input type="button" value="Verify" onclick="window.location.href=\'/Rotator/cgi-bin/verifyTask.cgi?submitteddate=%s\' ">' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][2]), userTaskLog[0][2]))
       else: #verified
         newsfeed.append(('%s had finished the task %s on %s and it was verified on %s' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][4]), userTaskLog[0][4] ))    
   else: # deadline is still up
     if userTaskLog[0][1] != 0:
       if userTaskLog[0][3] == 0: # not verified yet
-        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week!' % (userTaskLog[1], taskName, userTaskLog[0][2]), userTaskLog[0][2] ))
+        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week! <br> <input type="button" value="Verify" onclick="window.location.href=\'/Rotator/cgi-bin/verifyTask.cgi?submitteddate=%s\' ">' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][2]), userTaskLog[0][2]))
       else: #verified
         newsfeed.append(('%s had finished the task %s on %s and it was verified on %s' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][4]), userTaskLog[0][4] ))
         

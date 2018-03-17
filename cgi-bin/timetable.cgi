@@ -16,6 +16,7 @@ from rotator import LongerTask
 if not 'HTTP_COOKIE' in os.environ:
   print '<h1>Are you logged in?</h1>'
   print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
+  quit()
 else:
   c = Cookie.SimpleCookie()
   c.load(os.environ.get('HTTP_COOKIE'))
@@ -26,7 +27,8 @@ else:
     print "<TITLE>RotatoR</TITLE>"
   except KeyError:
     print '<h1>Are you logged in?</h1>'
-    print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
+    print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
+    quit()
 #end of that section 
 
 
@@ -196,7 +198,7 @@ if(len(satEveTask) == 0):
 else:
   addition = ' "task"> '
   for task in satEveTask:
-    addition += task.name + "<br>"
+    addition += "<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
 display += addition +'''</td>
   </tr>
   <tr>
