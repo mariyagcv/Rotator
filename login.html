@@ -5,24 +5,31 @@
   <link rel="stylesheet" href="styles.css">
 <title>RotatoR</title>
 </head>
-<body>
+<body id = "notInside">
   <div class = "centered">
 
 
-  <h1 >ROTATOЯ</h1> <!-- WHY ISJN'T ROTATOR RESPONSIVE !??? -->
+  <h1 id = "override">ROTATOЯ</h1> <!-- WHY ISJN'T ROTATOR RESPONSIVE !??? -->
 
 
-  <form action="php/loginpage.php">
-    <input type="text" name="uname" placeholder="Username" class = "container1"><br>
+  <form action="cgi-bin/login.cgi" method="post">
+    <input type="text" name="username" placeholder="Username" class = "container1"><br>
     <input type="password" name="password" placeholder="Password" class = "container1"><br>
     <!--this will lead to the page when a person has logged in-->
     <button type="submit" value="Submit" class = "container1">Log In</button>
   </form>
+
+
   <!-- Sign up button will lead to a page to register-->
   <!-- formaction="loginpage.php"  -->
 
-  <h3>New to Rotator? <span style="font-weight: 900"><a href="https://google.com" style="text-decoration:none; color:#EAD2AC;">Sign Up</a></span> now!</h3>
+  <h3 id = "h3Id">New to Rotator? <span style="font-weight: 900"><a id = "signUp" href="./register.html" style="text-decoration:none; color:#EAD2AC;">Sign Up</a></span> now!</h3>
 
+  <script type="text/javascript">
+     document.getElementById("signUp").onclick = function () {
+     location.href = "./register.html";
+    };
+  </script>
 </div>
 </body>
 </html>

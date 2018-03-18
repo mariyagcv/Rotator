@@ -9,15 +9,15 @@
 <body class = "inside">
   <div class = "centered">
 
-  <h1>REGISTER</h1> <!-- WHY ISJN'T ROTATOR RESPONSIVE !??? -->
+  <h1 class = "titleRegister">REGISTER</h1> <!-- WHY ISJN'T ROTATOR RESPONSIVE !??? -->
 
  <!-- validate name via serverside cuz if you use JS, some people might have
  js disabled and won't work -->
-  <form action="loginpage.php" >
-    <input type="text" name="name" placeholder="Name" class = "container1" style="background: white" id = "name"><br>
-    <input type="text" name="uname" placeholder="Username" class = "container1" style="background: white" ><br>
+  <form action="cgi-bin/signup.cgi" method="post">
+    <input type="text" name="username" placeholder="Username" class = "container1" style="background: white" id = "Username"><br>
+    <input type="text" name="email" placeholder="E-mail" class = "container1" style="background: white" id = "email"><br>
     <input type="password" name="password" placeholder="Password" class = "container1" style="background: white" id="password"><br>
-    <input type="password" name="password" placeholder="Confirm password" class = "container1" style="background: white" id = "confirm_password"><br>
+    <input type="password" name="password2" placeholder="Confirm password" class = "container1" style="background: white" id = "confirm_password"><br>
     <!--this will lead to the page when a person has logged in-->
 
     <!-- some js that checks if passwords match -->
@@ -40,12 +40,20 @@
     <button type="submit" value="Submit" class = "container1">Sign Up</button>
   </form>
 
+ <!-- <h2 <span style="font-weight: 300"><a style="text-decoration:none; color:#000000; font-size: 20px;"> Already part of Rotator?
+      <a id = "logIn" href="/Rotator/login.html" style="text-decoration:none; color:#000000; font-size: 20px;"><span style="font-weight: 600">Login now!</h2> -->
+        <p> Already part of Rotator?
+      <a id = "logIn" href="/Rotator/login.html" style="text-decoration:none; color:#000000; font-size: 20px;"><span style="font-weight: 600">Login now!</p>
+
+
+
 
   <!-- Sign up button will lead to a page to register-->
   <!-- formaction="loginpage.php"  -->
 
-  
+
 
 </div>
 </body>
 </html>
+

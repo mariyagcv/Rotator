@@ -1,3 +1,13 @@
 <?php
-//import file to authenticate user
+
+//check if has valid cookie
+
+require 'token.php';
+
+//if the validateToken() returns false
+if(!validateToken())
+{
+  header('Location: login.php');
+}
+
 ?>
