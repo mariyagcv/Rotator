@@ -53,6 +53,11 @@ body
       width: 50%;
   }
 
+  .taskList
+  {
+    font-size: 15px;
+  }
+
 }
 
 /*News Feed styles page begins here*/
@@ -115,11 +120,21 @@ h2
 {
   font-size: 60px;
 }
+
 .about_p
 {
   color: #FFFAF0;
   width: 100%;
+  width: 1000px;
+  word-wrap: break-word;
   text-align: center;
+  margin-left: 200px;
+}
+
+.unorderedList
+{
+  color: #DF7F7F;
+  line-height: 24px;
 }
 /*End of about styles*/
 h3
