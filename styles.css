@@ -130,6 +130,10 @@ h2
   font-size: 60px;
 }
 
+.aboutSubHeading
+{
+  color: #0066FF;
+}
 .about_p
 {
   color: #FFFAF0;
@@ -142,7 +146,7 @@ h2
 
 .unorderedList
 {
-  color: #DF7F7F;
+  color: #00FF00/*#DF7F7F*/;
   line-height: 24px;
 }
 /*End of about styles*/
@@ -366,4 +370,3 @@ th
   background-color: #DF7F7F;
   color: white;
 }
-
