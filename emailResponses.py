@@ -75,14 +75,14 @@ APPLICATION_NAME = 'Gmail API Python Quickstart'
 
 
 
-# CHECKED
+
 # Method that sends requests to verify the submition
 # to other members of the group and freezes reminder drafts.
 # Should be used when task is submitted.
 # Parameters: array of emails of the people in the group (apart from the one submitted),
 #             array of draft ids associated with the task submitted,
 #
-def mailResponseToSubmit(emails, draftIDs):
+def mailResponseToSubmit(user_ID):
 
   # some needed housekeeping
   credentials = get_credentials()
@@ -93,13 +93,26 @@ def mailResponseToSubmit(emails, draftIDs):
 #  if (len(draftIDs) != 0):
 #    for i in range(0, len(draftIDs) - 1):
 #      draftIDs[i]
-      # CHANGE 'SUBMITTED' FLAG IN THE DATABASE
+
+  credentials = get_credentials()
+  http = credentials.authorize(httplib2.Http())
+  service = discovery.build('gmail', 'v1', http=http)
+
+  connection = mysql.connector.connect(
+    user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
+    )
+  cursor= connection.cursor(buffered=True)
+
+  cursor.execute("SELECT Group_ID FROM User WHERE User_ID = %s" % user_ID)
+  groupid = cursor.fetchall()
+
+  cursor.execute("SELECT Email FROM User WHERE Group_Id = %s AND User_ID != %s" % (groupid, user_ID))
+  emails = cursor.fetchall()
 
   # send verification emails
   submitionSubject = "Verification Needed"
   submitionText = "Hello,\nOne of your neighbours submitted their task and needs verification. For more info log in to your Rotator account."
-  for i in range(0, len(emails)):
-    email = emails[i]
+  for email in emails:
     submitionTextID = send_message("me", create_message(email, submitionSubject, submitionText))
 
 
