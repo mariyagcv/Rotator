@@ -121,7 +121,7 @@ def mailResponseToSubmit(user_ID):
 # whose task was verified, and deletes the reminder drafts.
 # Should be used when task is verified.
 # Parameters: array of draft ids associated with the task verified,
-def mailResponseToVerify(task_ID):
+def mailResponseToVerify(user_ID):
   #
   #
   # some needed housekeeping
@@ -130,7 +130,18 @@ def mailResponseToVerify(task_ID):
   service = discovery.build('gmail', 'v1', http=http)
 
 
-# !!!!! inform the person that their task was verified
+  # inform the person that their task was verified
+  connection = mysql.connector.connect(
+  user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
+    )
+  cursor= connection.cursor(buffered=True)
+
+  cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ID)
+  email =  cursor.fetchall()
+  verificationSubject = 
+  verificationText = "Dear %s!\nYour task deadline is today.\nMake sure You copmlete it in time.\nFor more info log in to your Rotator account." % email[1]
+  verificationTextID = send_message("me", create_message(email[0], verificationSubject, verificationText))
+
 
 
 # Method to send timed notifications daily
@@ -180,7 +191,7 @@ def dailyEmailNotifications():
       cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ids[i])
       email =  cursor.fetchall()
       deadlineDayText = "Dear %s!\nYour task deadline is today.\nMake sure You copmlete it in time.\nFor more info log in to your Rotator account." % email[1]
-      deadlineDayTextID = create_draft("me", create_message(email[0], deadlineDaySubject, deadlineDayText))
+      deadlineDayTextID = send_message("me", create_message(email[0], deadlineDaySubject, deadlineDayText))
 
       
     # yesterday was deadline
@@ -188,7 +199,7 @@ def dailyEmailNotifications():
       cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ids[i])
       email =  cursor.fetchall()
       oneDayAfterText = "Dear %s!\nYour task deadline was yesterday. For more info log in to your Rotator account." % email[1]
-      oneDayAfterTextID = create_draft("me", create_message(email[0], oneDayAfterSubject, oneDayAfterText))
+      oneDayAfterTextID = send_message("me", create_message(email[0], oneDayAfterSubject, oneDayAfterText))
 
       
 
