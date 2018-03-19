@@ -2,6 +2,7 @@ from assigningTasksWeekly import query, rank
 import mysql.connector
 from datetime import datetime
 from threading import Timer
+from emailResponses import dailyEmailNotifications
 
 def run():
   connection = mysql.connector.connect(
@@ -16,5 +17,9 @@ def run():
   
   cursor.close()
   connection.close()
+
+def runDaily():
+  dailyEmailNotifications()
     
 schedule.every().monday.at('00:01').do(run)
+schedule.every().day.at('13:00').do(runDaily)
