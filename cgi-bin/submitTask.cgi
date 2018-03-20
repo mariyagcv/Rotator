@@ -9,6 +9,7 @@ import Cookie
 import os
 from datetime import datetime
 import mysql.connector
+from emailResponses import mailResponseToSubmit
 
 #check for cookie and use it assign user ID - should be everywhere at the beggining!
 if not 'HTTP_COOKIE' in os.environ:
@@ -35,7 +36,7 @@ connection = mysql.connector.connect(
 cursor = connection.cursor(buffered = True)
 
 
-
+mailResponseToSubmit(userId)
 cursor.execute("UPDATE User_Task_Log SET Submitted = 1, Submitted_Date = %s WHERE Submitted = 0 AND User_ID = %s AND Deadline = %s AND Task_ID = %s" % ("\'" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\'", userId, "\'" + dataField.getvalue("deadline") + "\'", dataField.getvalue("task_id")) )
 #kill the connection to DB
 connection.commit()

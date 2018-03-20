@@ -136,18 +136,31 @@ h2
 }
 .about_p
 {
+<<<<<<< HEAD
   color: #000000;
+=======
+  color: black;
+>>>>>>> 0a6fa177d286ee423febf9c302194947f3b9deb0
   width: 100%;
   width: 1000px;
   word-wrap: break-word;
   text-align: center;
-  margin-left: 200px;
+  margin-left: 400px;
 }
 
 .unorderedList
 {
-  color: #00FF00/*#DF7F7F*/;
+  color: black/*#DF7F7F*/;
+  background-color: #D1DEDE;
   line-height: 24px;
+  list-style-type: disc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.aboutMain
+{
+  overflow: auto;
 }
 /*End of about styles*/
 h3
