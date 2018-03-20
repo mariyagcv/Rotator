@@ -136,7 +136,7 @@ h2
 }
 .about_p
 {
-  color: #FFFAF0;
+  color: black;
   width: 100%;
   width: 1000px;
   word-wrap: break-word;
@@ -146,8 +146,17 @@ h2
 
 .unorderedList
 {
-  color: #00FF00/*#DF7F7F*/;
+  color: black/*#DF7F7F*/;
+  background-color: #D1DEDE;
   line-height: 24px;
+  list-style-type: disc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.aboutMain
+{
+  overflow: auto;
 }
 /*End of about styles*/
 h3
