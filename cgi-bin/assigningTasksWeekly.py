@@ -122,3 +122,32 @@ def query(new_groupID, new_dateOfCall):
   
   cursor.close()
   connection.close()
+  
+def rank(new_groupID, new_dateOfCall):
+  groupID = new_groupID
+  dateOfCall = new_dateOfCall
+  connection = mysql.connector.connect(
+    user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
+    )
+  cursor= connection.cursor(buffered=True)
+  cursor.execute("SELECT User_ID, WorkScore FROM User_Group_Log WHERE Group_ID = %s" % (groupId) )
+  userScores = cursor.fetchall() # (id, score) (id, score) ...
+  for user in userScores:
+    cursor.execute("SELECT Deadline, Submitted, Submitted_Date, Verified, Verified_Date, Task_ID FROM User_Task_Log WHERE User_ID = %s" % (user[0])
+    tasks = cursor.fetchall() # (dead, sub....) (d, s...)
+    for task in tasks:
+      cursor.execute("SELECT Difficulty FROM Task WHERE ID = %s " % (task[5]) )
+      difficulty = cursor.fetchall()[0][0]
+      if task[0] > (dateOfCall - timedelta(days = 7)) and task[0] < dateOfCall:
+        if task[1] == 1:
+          if task[2] < task[0]:
+            user[1] += difficulty
+          else:
+            user[1] -= difficulty
+        else:
+          user[1] -= difficulty
+      #?????
+      user[1] -= 1000
+      cursor.execute("UPDATE User SET WorkScore = %s WHERE ID = %s" %s  (user[1], user[0])
+      connection.commit()
+  
