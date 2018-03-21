@@ -100,7 +100,7 @@ body
   font-size: 28px;
   border-radius: 25px;
   border-color: white;
-  background: #DF7F7F; /*3399FF*/
+  background-color: #DF7F7F; /*3399FF*/
   padding: 20px;
   width: 500px;
   height: 250px;
@@ -340,7 +340,6 @@ th
   border-right: none;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
-  backgorund-color: pink;
 }
 
 

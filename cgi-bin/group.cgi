@@ -44,11 +44,14 @@ if typeOfGroup == 'new':
   while(cursor.rowcount):
     randomId = random.randint(1, 8388607)
     cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % randomId)
-  cursor.execute("INSERT INTO WorkGroup(ID, Name) VALUES (%s, %s)" % (randomId, dataField.getvalue('name'))
-  connection.commit()
+  cursor.execute("INSERT INTO WorkGroup(ID, Name) VALUES (%s, %s)" % (randomId, dataField.getvalue('name') ) )
   groupId = randomId
 else:
   groupId = int(dataField.getvalue('groupId') )
+  cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % groupId)
+  if len(cursor.fetchall() ) == 0:
+    print "<h1>Wrong group ID! That group does NOT exist.</h1><meta http-equiv=\"refresh\" content=\"3;url=/Rotator/group.html\" />"
+    quit()
   
 randomId = random.randint(1, 8388607)
 cursor.execute("SELECT ID FROM User_Group_Log WHERE ID = %s" % randomId)

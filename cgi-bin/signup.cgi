@@ -15,11 +15,11 @@ import random
 dataField = cgi.FieldStorage()
 try:
   global username
-  username = "\"" + dataField.getvalue("username") + "\""
+  username = "\'" + dataField.getvalue("username") + "\'"
   global email
-  email = "\"" + dataField.getvalue("email") + "\""
+  email = "\'" + dataField.getvalue("email") + "\'"
   global name
-  name = "\"" + dataField.getvalue("name") + "\""
+  name = "\'" + dataField.getvalue("name") + "\'"
 except:
   print "<h1>You can't leave empty fields!</h1><meta http-equiv=\"refresh\" content=\"3;url=/Rotator/register.html\" /> "
   quit()
@@ -44,8 +44,8 @@ except Exception:
   
 cursor.execute("""
 INSERT INTO User (ID, Name, Username, Password_Hash, Email)
-VALUES (%s, %s, %s, %s) 
-""" % (randomId, name, username ,"\"" + password + "\"", email) )
+VALUES (%s, %s, %s, %s, %s) 
+""" % (randomId, name, username ,"\'" + password + "\'", email) )
 
 connection.commit()
 cursor.close()
