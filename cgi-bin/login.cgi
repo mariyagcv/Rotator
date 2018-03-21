@@ -6,9 +6,16 @@ import cgi
 import datetime
 
 dataField = cgi.FieldStorage()
-
-username = "\"" + dataField.getvalue('username') + "\""
-password = dataField.getvalue('password')
+try:
+  global username
+  username = "\"" + dataField.getvalue('username') + "\""
+  global password
+  password = dataField.getvalue('password')
+except:
+  print "Content-Type: text/html\n\n"
+  print "'<link rel=\"stylesheet\" href=\"../styles.css\">'<TITLE>Login</TITLE><h1>You can't leave empty fields!</h1><meta http-equiv=\"refresh\" content=\"5;url=../login.html\" />"
+  quit()
+  
 
 connection = mysql.connector.connect(
     user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
@@ -22,6 +29,7 @@ try:
 except:
   print "Content-Type: text/html\n\n"
   print "'<link rel=\"stylesheet\" href=\"../styles.css\">'<TITLE>Login</TITLE><h1>Wrong login!</h1><meta http-equiv=\"refresh\" content=\"5;url=../login.html\" />"
+  quit()
 
 hashed = table[0]
 userId = table[1]

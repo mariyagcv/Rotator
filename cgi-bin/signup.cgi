@@ -3,7 +3,6 @@
 print "Content-Type: text/html"
 print
 print "<TITLE> Signup </TITLE>"
-print "<H1>Redirecting...</H1>"
 print ''' <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
 <link rel="stylesheet" href="/Rotator/styles.css"> '''
 
@@ -14,7 +13,17 @@ import random
 
 
 dataField = cgi.FieldStorage()
-
+try:
+  global username
+  username = "\"" + dataField.getvalue("username") + "\""
+  global email
+  email = "\"" + dataField.getvalue("email") + "\""
+  global name
+  name = "\"" + dataField.getvalue("name") + "\""
+except:
+  print "<h1>You can't leave empty fields!</h1><meta http-equiv=\"refresh\" content=\"3;url=/Rotator/register.html\" /> "
+  quit()
+print "<H1>Redirecting...</H1>"
 password = dataField.getvalue("password")
 password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
 
@@ -36,7 +45,7 @@ except Exception:
 cursor.execute("""
 INSERT INTO User (ID, Name, Username, Password_Hash, Email)
 VALUES (%s, %s, %s, %s) 
-""" % (randomId,"\"" + dataField.getvalue("name") + "\"", "\"" + dataField.getvalue("username") + "\"" ,"\"" + password + "\"", "\"" + dataField.getvalue("email") + "\"") )
+""" % (randomId, name, username ,"\"" + password + "\"", email) )
 
 connection.commit()
 cursor.close()
