@@ -36,33 +36,56 @@ connection = mysql.connector.connect(
   )
 cursor = connection.cursor(buffered = True)
 
-typeOfGroup = dataField.getvalue('typeOfGroup')
-
-if typeOfGroup == 'new':
+try:  
+  global randomId
   randomId = random.randint(1, 8388607)
   cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % randomId)
-  while(cursor.rowcount):
+  while(cursor.rowcount != 0):
     randomId = random.randint(1, 8388607)
     cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % randomId)
-  cursor.execute("INSERT INTO WorkGroup(ID, Name) VALUES (%s, %s)" % (randomId, dataField.getvalue('name') ) )
+except:
+  pass
+try:
+  global groupId
   groupId = randomId
-else:
-  groupId = int(dataField.getvalue('groupId') )
-  cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % groupId)
+  global name
+  name = "\'" + dataField.getvalue('name') + "\'"
+  cursor.execute("INSERT INTO WorkGroup(ID, Name) VALUES (%s, %s)" % (randomId, name ) )
+  connection.commit()
+except:
+  pass
+try:
+  newGroupId = int(dataField.getvalue('groupId') )
+  cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % newGroupId)
   if len(cursor.fetchall() ) == 0:
     print "<h1>Wrong group ID! That group does NOT exist.</h1><meta http-equiv=\"refresh\" content=\"3;url=/Rotator/group.html\" />"
     quit()
-  
-randomId = random.randint(1, 8388607)
-cursor.execute("SELECT ID FROM User_Group_Log WHERE ID = %s" % randomId)
-while(cursor.rowcount):
+  groupId = newGroupId
+except:
+  pass
+    
+try:  
+  randomId = random.randint(1, 8388607)
+  cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % randomId)
+  while(cursor.rowcount != 0):
+    randomId = random.randint(1, 8388607)
+    cursor.execute("SELECT ID FROM WorkGroup WHERE ID = %s" % randomId)
+except:
+  pass
+
+try:
   randomId = random.randint(1, 8388607)
   cursor.execute("SELECT ID FROM User_Group_Log WHERE ID = %s" % randomId)
-  
+  while(cursor.rowcount != 0):
+    randomId = random.randint(1, 8388607)
+    cursor.execute("SELECT ID FROM User_Group_Log WHERE ID = %s" % randomId)
+except:
+  pass
+    
 cursor.execute("INSERT INTO User_Group_Log(ID, User_ID, Group_ID) VALUES (%s, %s, %s) " % (randomId, userId, groupId) )
 connection.commit()
 cursor.close()
 connection.close()
 
-print "<h1>You are being redirected...</h1> " # HTML to redirect here
+print "<h1>Group created successfully! You are being redirected...</h1> " # HTML to redirect here
 print '<meta http-equiv="refresh" content="3;url=/Rotator/cgi-bin/timetable.cgi" />'

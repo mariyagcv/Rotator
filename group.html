@@ -13,11 +13,11 @@
 
  <!-- validate name via serverside cuz if you use JS, some people might have
  js disabled and won't work -->
-  <form action="cgi-bin/group.cgi" method="post">
+  <form action="cgi-bin/group.cgi "method="post">
     <input type="text" name="groupId" placeholder="Insert group id" class = "container1" id = "groupId"><br>
     <button type="submit" value="join" class = "container1">Join</button>
     <h1 class = "titleGroup">CREATE GROUP</h1>
-    <input type="text" name="name" placeholder="Insert group name" class = "container1" id = "groupId"><br>
+    <input type="text" name="name" placeholder="Insert group name" class = "container1" id = "name"><br>
      <button type="submit" value="new" class = "container1">Create</button> <!-- value is new because this will be passed as a typeOfGroup -->
   </form>
     <!--this will lead to the page when a person has logged in-->

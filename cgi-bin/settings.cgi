@@ -20,7 +20,6 @@ else:
   try:
     global userId
     userId = c['Rotator'].value
-    print "<TITLE>RotatoR</TITLE>"
   except KeyError:
     print '<h1>Are you logged in?</h1>'
     print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
@@ -53,7 +52,37 @@ print '''
       <a href="#" class="btn"><i class="fa fa-bars"></i></a>
     </div>
   </span>
-  Miruna's work for the settings: '</div>''' #HTML here
+  	</style>
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
+	  <link rel="stylesheet" href="styles.css">
+
+	<!-- Just tried to add a little title image, I know its not the logo -->
+	<link rel="icon" type="image/gif/png" href="logo.png">
+
+	<title>Settings</title>
+</head>
+
+<body>
+
+		<div class="container">
+			<h1><font color="#1d201f" size="20">Settings</font></h1>
+			<div class="centered">
+                <br>
+                <button type="submit" value="Personal" onclick="document.getElementById('personalSettings').style.display='block'; document.getElementById('groupSettings').style.display='none'; " class = "container1">Personal</button>
+                  <div id="personalSettings" style="display: none;">
+                    <p>%s %s %s</p>
+                  </div>
+                <br>
+                <button type="submit" value="Submit" onclick="document.getElementById('personalSettings').style.display='none'; document.getElementById('groupSettings').style.display='block'; " class = "container1">Group</button>
+                  <div id="groupSettings" style="display: none;">
+                    <p>Group Settings:</p>
+                  </div>
+			</div>
+		</div>
+
+</body>
+</div>''' % (details)#HTML here
 
 
 cursor.close()
