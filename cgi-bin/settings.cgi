@@ -34,7 +34,16 @@ cursor.execute("SELECT Name, Email, Phone FROM User WHERE ID = %s" % userId)
 
 details = cursor.fetchall()[0] #details[0] = name, details[1] = email, details[2] = phone
 
-print '''
+if details[2] == None:
+  details = (details[0], details[1], "")
+
+cursor.execute("SELECT WorkGroup.Name, WorkGroup.ID FROM WorkGroup INNER JOIN User_Group_Log ON WorkGroup.ID = User_Group_Log.Group_ID WHERE User_Group_Log.User_ID = %s" % userId )
+try:
+  groupName = cursor.fetchall()[0] #gname
+except:
+  groupName = ""
+
+display = '''
 <body class = "inside" id="uberbar">
 <script src="/Rotator/menuScript.js"></script>
 <div id="mySidenav" class="sidenav">
@@ -66,24 +75,86 @@ print '''
 <body>
 
 		<div class="container">
-			<h1><font color="#1d201f" size="20">Settings</font></h1>
-			<div class="centered">
+			<h1>Settings</h1>
+			<div class="centered" style="width: 500px;">
                 <br>
                 <button type="submit" value="Personal" onclick="document.getElementById('personalSettings').style.display='block'; document.getElementById('groupSettings').style.display='none'; " class = "container1">Personal</button>
                   <div id="personalSettings" style="display: none;">
-                    <p>%s %s %s</p>
+                  <form action="changeSettings.cgi" method="post">
+                    <h3> Your name: </h3><input type="text" name="name" value=%s class = "container1" style="background: white" id = "username">
+                    <h3> Your e-mail: </h3><input type="text" name="email" value=%s class = "container1" style="background: white" id = "email">
+                    <h3> Your phone: </h3><input type="text" name="phone" value="%s" class = "container1" style="background: white" id = "phone">
+                  <button type="submit" value="Save" class = "container1" style="width: 150px;">Save</button>
+                  </form>
                   </div>
                 <br>
                 <button type="submit" value="Submit" onclick="document.getElementById('personalSettings').style.display='none'; document.getElementById('groupSettings').style.display='block'; " class = "container1">Group</button>
-                  <div id="groupSettings" style="display: none;">
-                    <p>Group Settings:</p>
-                  </div>
+                  <div id="groupSettings" style="display: none;"> '''% (details)
+if groupName == "":
+  display += '''
+    <h3> You don't belong to any group! <a href="/Rotator/group.html">Join one now!</a></h3>
+  '''
+else:
+  cursor.execute("SELECT Name, Difficulty FROM Task WHERE Group_ID = %s ORDER BY Difficulty ASC" % (groupName[1]) )
+  groupTasks = cursor.fetchall()
+  display += '''
+                    <form action="changeGroupName.cgi" method="post"> 
+                      <h3> Group name: </h3><input type="text" name="groupName" value="%s" class = "container1" style="background: white" id = "groupName">
+                  <button type="submit" value="Save" class = "container1" style="width: 150px;">Save</button>
+                  </form> 
+  <table>
+  <tr>
+    <th class = "weekDays">ID</th>
+    <th class = "weekDays">Difficulty</th>
+    <th class = "weekDays">Name</th>
+  </tr>
+                  ''' % (groupName[0])
+  for index in range (0, len(groupTasks)):
+    display += '''
+  <tr>
+    <td class = "weekDays"> %s </td>
+    <td class = "task">%s</td>
+    <td class = "task">%s</td>
+  </tr>
+    ''' % (str(index+1), groupTasks[index][0], groupTasks[index][1])
+
+  display += '''</table>
+  <h3> Do you want to add a new task? </h3>
+                      <form action="addNewTask.cgi" method="post"> 
+                        <h3> New task's name: </h3><input type="text" name="taskName" placeholder="Task name" class = "container1" style="background: white" id = "taskName">
+                        <h3> New task's difficulty: </h3><input type="text" name="taskDiff" placeholder="(Average is 1000)" class = "container1" style="background: white" id = "taskDiff">
+                        <button type="submit" value="Add" class = "container1" style="width: 150px;">Add</button>
+                      </form> 
+    <table>
+      <tr>
+        <th class = "weekDays">Name</th>
+        <th class = "weekDays">Score</th>
+        <th class = "weekDays">Remove</th>
+      </tr>
+              '''
+  cursor.execute("SELECT User.Name, User_Group_Log.Work_Score, User.ID FROM User INNER JOIN User_Group_Log ON User.ID = User_Group_Log.User_ID WHERE User_Group_Log.Group_ID = %s" % (groupName[1]) )                
+  users = cursor.fetchall()
+  for user in users:
+    display += '''
+      <tr>
+        <td class = "task">%s</td>
+        <td class = "task">%s</td>
+        <td class = "task">
+                 <form action="removeUser.cgi" method="post"> 
+                        <input type="text" name="userID" value=%s class = "container1" style="display: none;">
+                        <button type="submit" value="Remove" class = "container1" style="width: 150px;">Remove</button>
+                 </form> 
+          </td
+      </tr>
+       ''' % (user[0], user[1], user[2])
+display +=  ''' </table>              
 			</div>
 		</div>
 
 </body>
-</div>''' % (details)#HTML here
-
+</div>''' 
 
 cursor.close()
 connection.close()
+
+print display
