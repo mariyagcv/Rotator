@@ -45,7 +45,7 @@ if cursor.fetchall()[0][0] == userId:
 else:
   cursor = connection.cursor(buffered = True)
   cursor.execute("UPDATE User_Task_Log SET Verified = 1, Verified_Date = %s WHERE ID = %s" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), userTaskId) )
-  mailResponseToVerify(userId)
+  #mailResponseToVerify(userId)
   #kill the connection to DB
   connection.commit()
   cursor.close()
