@@ -100,7 +100,7 @@ body
   font-size: 28px;
   border-radius: 25px;
   border-color: white;
-  background: #3399FF;
+  background: #DF7F7F; /*3399FF*/
   padding: 20px;
   width: 500px;
   height: 250px;
@@ -132,15 +132,11 @@ h2
 
 .aboutSubHeading
 {
-  color: #0066FF;
+  color: #DF7F7F;
 }
 .about_p
 {
-<<<<<<< HEAD
   color: #000000;
-=======
-  color: black;
->>>>>>> 0a6fa177d286ee423febf9c302194947f3b9deb0
   width: 100%;
   width: 1000px;
   word-wrap: break-word;
@@ -151,7 +147,7 @@ h2
 .unorderedList
 {
   color: black/*#DF7F7F*/;
-  background-color: #D1DEDE;
+  background-color: #DF7F7F;
   line-height: 24px;
   list-style-type: disc;
   border-radius: 10px;
