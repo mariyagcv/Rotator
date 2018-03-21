@@ -9,7 +9,7 @@ import Cookie
 import os
 from datetime import datetime
 import mysql.connector
-from emailResponses import mailResponseToVerify
+#from emailResponses import mailResponseToVerify
 
 #check for cookie and use it assign user ID - should be everywhere at the beggining!
 if not 'HTTP_COOKIE' in os.environ:
@@ -35,20 +35,23 @@ dataField = cgi.FieldStorage()
 connection = mysql.connector.connect(
   user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
   )
-
-cursor.execute("SELECT User_ID FROM User_Task_Log WHERE Submitted_Date = %s" % ("\'" + dataField.getvalue('submitteddate') + "\'")
-if cursor.fetchall()[0][0] == userId:
+cursor = connection.cursor(buffered = True)
+cursor.execute("SELECT User_ID, ID FROM User_Task_Log WHERE Submitted_Date = %s" % ("\'" + dataField.getvalue('submitteddate') + "\'") )
+userIds = cursor.fetchall()[0]
+if userIds[0] == userId:
   print '''
   <h1> You can't verify your own task! </h1>
   '''
   quit()
 else:
-  cursor = connection.cursor(buffered = True)
-  cursor.execute("UPDATE User_Task_Log SET Verified = 1, Verified_Date = %s WHERE ID = %s" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), userTaskId) )
+  cursor.execute("UPDATE User_Task_Log SET Verified = 1, Verified_Date = %s WHERE ID = %s" % ("\'" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\'", userIds[1]) )
   #mailResponseToVerify(userId)
+  print '''
+  <h1> Task verification complete! </h1>
+  '''
   #kill the connection to DB
   connection.commit()
   cursor.close()
   connection.close()
 
-print '<meta http-equiv="refresh" content="5;url=/Rotator/cgi-bin/newsfeed.cgi" />'#HTML to redirect here <3
+print '<meta http-equiv="refresh" content="3;url=/Rotator/cgi-bin/newsfeed.cgi" />'#HTML to redirect here <3

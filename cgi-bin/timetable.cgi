@@ -243,43 +243,40 @@ display += addition +'''</td>
 <div id="dialog" title="Your task" style="display:none">
   <p>Task name: 
 '''
-addition = task.name  + "<br>" 
-display += addition + "<br>"
+if len(tasks):
+  addition = task.name  + "<br>" 
+  display += addition + "<br>"
 
-addition =  '''Deadline: ''' + task.deadline + "<br>" 
-display += addition + "<br>"
+  addition =  '''Deadline: ''' + task.deadline + "<br>" 
+  display += addition + "<br>"
 
-#for some reason when I add task.difficulty it fucks it up, whytho 
-addition =  '''Difficulty:  ''' + "<br>" 
-display += addition + "<br>"
+  #for some reason when I add task.difficulty it fucks it up, whytho 
+  addition =  '''Difficulty:  ''' + "<br>" 
+  display += addition + "<br>"
+    
+  #Rotator/cgi-bin/submitTask.cgi?task_id=1&deadline=2018-03-17%2020:00:00
+  #/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s
+  #"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
 
-#Rotator/cgi-bin/submitTask.cgi?task_id=1&deadline=2018-03-17%2020:00:00
-#/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s
-#"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
+  #onclick="window.location.href='/Rotator/cgi-bin/submitTask.cgi?name=task.name&deadline=task.deadline&difficulty=task.difficulty&task.id' ">'''
 
-#onclick="window.location.href='/Rotator/cgi-bin/submitTask.cgi?name=task.name&deadline=task.deadline&difficulty=task.difficulty&task.id' ">'''
+  #"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
 
-#"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
+  #maybe make the button prettier ! but that's not that urgent for now 
 
-#maybe make the button prettier ! but that's not that urgent for now 
+  #THIS WORKS
+  #addition = '''<input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;
+   #border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" onclick="window.location.href='http://www.google.com';"/> "'''
+   
+  addition = '''<input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;
+   border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" onclick="window.location.href='/Rotator/cgi-bin/submitTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s ';"/> ''' % (task.name, task.deadline, task.difficulty,  task.id)
+   # % (task.name, task.deadline, task.difficulty,  task.id) + "<br>"
+  display += addition + "<br>"
 
-#THIS WORKS
-#addition = '''<input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;
- #border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" onclick="window.location.href='http://www.google.com';"/> "'''
- 
-addition = '''<input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;
- border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" onclick="window.location.href='/Rotator/cgi-bin/submitTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s ';"/> ''' % (task.name, task.deadline, task.difficulty,  task.id)
- # % (task.name, task.deadline, task.difficulty,  task.id) + "<br>"
-display += addition + "<br>"
-
-#when I submit task, either from the popup or the hyperlink, I think it doesn't update it on the newsfeed :/ 
-'''
-
+  #when I submit task, either from the popup or the hyperlink, I think it doesn't update it on the newsfeed :/ 
+display +='''
 </p>
-
-
 </div>
-
 </body>
 </div>
 </html>

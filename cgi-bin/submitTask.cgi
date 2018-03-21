@@ -9,7 +9,7 @@ import Cookie
 import os
 from datetime import datetime
 import mysql.connector
-from emailResponses import mailResponseToSubmit
+#from emailResponses import mailResponseToSubmit
 
 #check for cookie and use it assign user ID - should be everywhere at the beggining!
 if not 'HTTP_COOKIE' in os.environ:
