@@ -44,7 +44,7 @@ except:
   groupName = ""
 
 display = '''
-<body class = "inside" id="uberbar">
+<head>
 <script src="/Rotator/menuScript.js"></script>
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -54,6 +54,7 @@ display = '''
   <a href="/Rotator/about.html">About</a>
   <a href="/Rotator/cgi-bin/logout.cgi">Log out</a>
 </div>
+</head>
 <div id="rest">
   <span onclick="openNav()">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -70,13 +71,12 @@ display = '''
 	<link rel="icon" type="image/gif/png" href="logo.png">
 
 	<title>Settings</title>
-</head>
 
-<body>
 
+<body class = "inside">
 		<div class="container">
-			<h1>Settings</h1>
-			<div class="centered" style="width: 500px;">
+			<h1>Settings</h1><br><br><br><br><br><br><br><br>
+			<div class="centered" style="width: 500px; position: relative;">
                 <br>
                 <button type="submit" value="Personal" onclick="document.getElementById('personalSettings').style.display='block'; document.getElementById('groupSettings').style.display='none'; " class = "container1">Personal</button>
                   <div id="personalSettings" style="display: none;">
