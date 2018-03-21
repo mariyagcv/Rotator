@@ -36,7 +36,7 @@ connection = mysql.connector.connect(
 cursor = connection.cursor(buffered = True)
 
 
-mailResponseToSubmit(userId)
+#mailResponseToSubmit(userId)
 cursor.execute("UPDATE User_Task_Log SET Submitted = 1, Submitted_Date = %s WHERE Submitted = 0 AND User_ID = %s AND Deadline = %s AND Task_ID = %s" % ("\'" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\'", userId, "\'" + dataField.getvalue("deadline") + "\'", dataField.getvalue("task_id")) )
 #kill the connection to DB
 connection.commit()
