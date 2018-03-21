@@ -251,7 +251,7 @@ if len(tasks):
   display += addition + "<br>"
 
   #for some reason when I add task.difficulty it fucks it up, whytho 
-  addition =  '''Difficulty:  ''' + "<br>" 
+  addition =  '''Difficulty:  ''' + str(task.difficulty) + "<br>" 
   display += addition + "<br>"
     
   #Rotator/cgi-bin/submitTask.cgi?task_id=1&deadline=2018-03-17%2020:00:00

@@ -108,13 +108,13 @@ for userTaskLog in userTaskLogs:
       # (string, datetime)
     else: # submition before deadline
       if userTaskLog[0][3] == 0: # not verified yet
-        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week! <br> <input type="button" value="Verify" onclick="window.location.href=\'/Rotator/cgi-bin/verifyTask.cgi?submitteddate=%s\' ">' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][2]), userTaskLog[0][2]))
+        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week! <br> <input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;   border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Verify" onclick="window.location.href=\'/Rotator/cgi-bin/verifyTask.cgi?submitteddate=%s\' ">' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][2]), userTaskLog[0][2]))
       else: #verified
         newsfeed.append(('%s had finished the task %s on %s and it was verified on %s' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][4]), userTaskLog[0][4] ))    
   else: # deadline is still up
     if userTaskLog[0][1] != 0:
       if userTaskLog[0][3] == 0: # not verified yet
-        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week! <br> <input type="button" value="Verify" onclick="window.location.href=\'/Rotator/cgi-bin/verifyTask.cgi?submitteddate=%s\' ">' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][2]), userTaskLog[0][2]))
+        newsfeed.append(('%s finished the task %s on %s. Please verify it by the end of the week! <br> <input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;   border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Verify" onclick="window.location.href=\'/Rotator/cgi-bin/verifyTask.cgi?submitteddate=%s\' ">' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][2]), userTaskLog[0][2]))
       else: #verified
         newsfeed.append(('%s had finished the task %s on %s and it was verified on %s' % (userTaskLog[1], taskName, userTaskLog[0][2], userTaskLog[0][4]), userTaskLog[0][4] ))
         
