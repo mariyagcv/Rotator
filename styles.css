@@ -62,6 +62,32 @@ body
 
 }
 
+
+/*Backgroud use*/
+body.bg{
+
+    background-image: url('bgbg.jpg');
+    animation: mymoveD 3s;
+    background-position: 0px 0px;
+}
+
+@media only screen and (max-width: 800px) {
+    body.bg{
+        animation: mymoveM 3s;
+        background-position: -200px 0px;
+    }
+}
+
+@keyframes mymoveM{
+    0% {background-position: 0px 0px;}
+    100% {background-position: -200px 0px;}
+}
+
+@keyframes mymoveD {
+    0% {background-position: -200px 0px;}
+    100% {background-position: 0px 0px;}
+}
+
 /*News Feed styles page begins here*/
 
 .tasks
