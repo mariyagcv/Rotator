@@ -85,9 +85,6 @@ APPLICATION_NAME = 'Gmail API Python Quickstart'
 def mailResponseToSubmit(user_ID):
 
   # some needed housekeeping
-  credentials = get_credentials()
-  http = credentials.authorize(httplib2.Http())
-  service = discovery.build('gmail', 'v1', http=http)
 
   # freeze notifications for this task
 #  if (len(draftIDs) != 0):
@@ -103,11 +100,18 @@ def mailResponseToSubmit(user_ID):
     )
   cursor= connection.cursor(buffered=True)
 
-  cursor.execute("SELECT Group_ID FROM User WHERE User_ID = %s" % user_ID)
-  groupid = cursor.fetchall()
+  cursor.execute("SELECT Group_ID FROM User_Group_Log WHERE User_ID = %s" % ("\'" + str(user_ID) + "\'" ) )
+  groupid = cursor.fetchall()[0][0] #((a))
 
-  cursor.execute("SELECT Email FROM User WHERE Group_Id = %s AND User_ID != %s" % (groupid, user_ID))
-  emails = cursor.fetchall()
+  cursor.execute("SELECT User_ID FROM User_Group_Log WHERE Group_ID = %s AND User_ID != %s" % (groupid, user_ID))
+  users = cursor.fetchall() # ((user_ID)(user_ID)(..))
+
+  emails = []
+  for user in users:
+    cursor.execute("SELECT Email FROM User WHERE ID = %s" % (user[0]) )
+    emails.append(cursor.fetchall()[0][0])
+
+  
 
   # send verification emails
   submitionSubject = "Verification Needed"
@@ -115,7 +119,8 @@ def mailResponseToSubmit(user_ID):
   for email in emails:
     submitionTextID = send_message("me", create_message(email, submitionSubject, submitionText))
 
-
+  cursor.close()
+  connection.close()
 
 # Method that sends notification to the person,
 # whose task was verified, and deletes the reminder drafts.

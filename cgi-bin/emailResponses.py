@@ -3,6 +3,7 @@
 
 # !ONLY WORKS ON A MACHINE WHERE NEEDED LIBRARIES ARE DOWNLOADED!
 # See "Step 2" here: https://developers.google.com/gmail/api/quickstart/python
+# and then run the quickstart.py in Rotator
 
 # import what we need
 from __future__ import print_function
@@ -21,6 +22,7 @@ from oauth2client.file import Storage
 import mysql.connector
 from datetime import timedelta, date, datetime
 
+
 global connection
 global cursor
 
@@ -35,43 +37,9 @@ except ImportError:
 # at ~/.credentials/gmail-python-quickstart.json
 # Following credentials allow to create, alter and delete drafts
 # and to send massages and draftes.
-SCOPES = 'https://www.googleapis.com/auth/gmail.compose'
+SCOPES = 'https://mail.google.com/'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Gmail API Python Quickstart'
-
-# NOT USED ANYMOE: WE CHANGED THE APROACH
-# CHECKED
-# Method that creates drafts for further reminder emails.
-# Should be used when tasks are allocated.
-# Parameters: name of the reciever,
-#             email of the reciever,
-#
-#def mailResponseToAssignment(name, email): #taskID):
-
-  
-
-  # create draft for one day prior notification
-#  oneDayPriorSubject = "Tomorrow's Deadline"
-#  oneDayPriorText = "Dear %s!\nYour task deadline is tomorrow. For more info log in to your Rotator account." % name
-#  oneDayPriorTextID = create_draft("me", create_message(email, oneDayPriorSubject, oneDayPriorText))
-
-  # create draft for day of deadline notification
-#  deadlineDaySubject = "Today's Deadline"
-#  deadlineDayText = "Dear %s!\nYour task deadline is today.\nMake sure You copmlete it in time.\nFor more info log in to your Rotator account." % name
-#  deadlineDayTextID = create_draft("me", create_message(email, deadlineDaySubject, deadlineDayText))
-
-  # create draft for one day late notification
-#  oneDayAfterSubject = "Missed Deadline"
-#  oneDayAfterText = "Dear %s!\nYour task deadline was yesterday. For more info log in to your Rotator account." % name
-#  oneDayAfterTextID = create_draft("me", create_message(email, oneDayAfterSubject, oneDayAfterText))
-
-  #for testing
-  #draft_ids = []
-  #draft_ids.append(oneDayPriorTextID)
-  #draft_ids.append(deadlineDayTextID)
-  #draft_ids.append(oneDayAfterTextID)
-  #return draft_ids
-
 
 
 
@@ -85,9 +53,6 @@ APPLICATION_NAME = 'Gmail API Python Quickstart'
 def mailResponseToSubmit(user_ID):
 
   # some needed housekeeping
-  credentials = get_credentials()
-  http = credentials.authorize(httplib2.Http())
-  service = discovery.build('gmail', 'v1', http=http)
 
   # freeze notifications for this task
 #  if (len(draftIDs) != 0):
@@ -103,17 +68,27 @@ def mailResponseToSubmit(user_ID):
     )
   cursor= connection.cursor(buffered=True)
 
-  cursor.execute("SELECT Group_ID FROM User WHERE User_ID = %s" % user_ID)
-  groupid = cursor.fetchall()
+  cursor.execute("SELECT Group_ID FROM User_Group_Log WHERE User_ID = %s" % ("\'" + str(user_ID) + "\'" ) )
+  groupid = cursor.fetchall()[0][0] #((a))
 
-  cursor.execute("SELECT Email FROM User WHERE Group_Id = %s AND User_ID != %s" % (groupid, user_ID))
-  emails = cursor.fetchall()
+  cursor.execute("SELECT User_ID FROM User_Group_Log WHERE Group_ID = %s AND User_ID != %s" % (groupid, user_ID))
+  users = cursor.fetchall() # ((user_ID)(user_ID)(..))
+
+  emails = []
+  for user in users:
+    cursor.execute("SELECT Email FROM User WHERE ID = %s" % (user[0]) )
+    emails.append(cursor.fetchall()[0][0])
+
+  
 
   # send verification emails
   submitionSubject = "Verification Needed"
   submitionText = "Hello,\nOne of your neighbours submitted their task and needs verification. For more info log in to your Rotator account."
   for email in emails:
     submitionTextID = send_message("me", create_message(email, submitionSubject, submitionText))
+
+  cursor.close()
+  connection.close()
 
 
 
@@ -122,8 +97,8 @@ def mailResponseToSubmit(user_ID):
 # Should be used when task is verified.
 # Parameters: array of draft ids associated with the task verified,
 def mailResponseToVerify(user_ID):
-  #
-  #
+  
+
   # some needed housekeeping
   credentials = get_credentials()
   http = credentials.authorize(httplib2.Http())
@@ -136,11 +111,14 @@ def mailResponseToVerify(user_ID):
     )
   cursor= connection.cursor(buffered=True)
 
-  cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ID)
+  cursor.execute("SELECT Email, Name FROM User WHERE ID = %s" % user_ID)
   email =  cursor.fetchall()
-  verificationSubject = 
-  verificationText = "Dear %s!\nYour task deadline is today.\nMake sure You copmlete it in time.\nFor more info log in to your Rotator account." % email[1]
-  verificationTextID = send_message("me", create_message(email[0], verificationSubject, verificationText))
+  verificationSubject = "Task Verified"
+  verificationText = "Dear %s!\nYour task has been verified, well done!.\nFor more info log in to your Rotator account." % email[0][1]
+  verificationTextID = send_message("me", create_message(email[0][0], verificationSubject, verificationText))
+
+  cursor.close()
+  connection.close()
 
 
 
@@ -166,42 +144,50 @@ def dailyEmailNotifications():
 
   # send the notifications
   #calculate day difference (to an hour)
-  cursor.execute("SELECT User_Task_Log.Deadline FROM User_Task_Log WHERE User_Task_Log.Submitted = 0" 
+  cursor.execute("SELECT Deadline FROM User_Task_Log WHERE Submitted = 0" 
                          )
   deadlines = cursor.fetchall()
-  cursor.execute("SELECT User_ID FROM User_Task_Log WHERE User_Task_Log.Submitted = 0" 
+  cursor.execute("SELECT User_ID FROM User_Task_Log WHERE Submitted = 0" 
                          )
   user_ids = cursor.fetchall()
 
   oneDayPriorSubject = "Tomorrow's Deadline"
   deadlineDaySubject = "Today's Deadline"
   oneDayAfterSubject = "Missed Deadline"
+  i = 0
 
-  for i in range(0, len(deadlines)):
-    notificationDeadline = timedelta((today - deadlines[0]).days)
+
+  for deadline in deadlines:
+
+    notificationDeadline = timedelta(days=((datetime.now().date() - deadline[0].date()).days))
+
     # tomorrow is deadline
-    if notificationDeadline == -1:
-      cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ids[i])
+    if notificationDeadline.days == -1:
+      cursor.execute("SELECT Email, Name FROM User WHERE ID = %s" % user_ids[i][0])
       email =  cursor.fetchall()
-      oneDayPriorText = "Dear %s!\nYour task deadline is tomorrow. For more info log in to your Rotator account." % email[1]
-      oneDayPriorTextID = send_message("me", create_message(email[0], oneDayPriorSubject, oneDayPriorText))
+      oneDayPriorText = "Dear %s!\nYour task deadline is tomorrow. For more info log in to your Rotator account." % email[0][1]
+      oneDayPriorTextID = send_message("me", create_message(email[0][0], oneDayPriorSubject, oneDayPriorText))
 
     # today is deadline
-    elif notificationDeadline == 0:
-      cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ids[i])
-      email =  cursor.fetchall()
-      deadlineDayText = "Dear %s!\nYour task deadline is today.\nMake sure You copmlete it in time.\nFor more info log in to your Rotator account." % email[1]
-      deadlineDayTextID = send_message("me", create_message(email[0], deadlineDaySubject, deadlineDayText))
+    elif notificationDeadline.days == 0:
+      cursor.execute("SELECT Email, Name FROM User WHERE ID = %s" % user_ids[i][0])
+      email = cursor.fetchall()
+      deadlineDayText = "Dear %s!\nYour task deadline is today.\nMake sure You copmlete it in time.\nFor more info log in to your Rotator account." % email[0][1]
+      deadlineDayTextID = send_message("me", create_message(email[0][0], deadlineDaySubject, deadlineDayText))
 
       
     # yesterday was deadline
-    elif notificationDeadline == 1:
-      cursor.execute("SELECT User.Email, User.Name FROM User WHERE User.ID = %s" % user_ids[i])
+    elif notificationDeadline.days == 1:
+      cursor.execute("SELECT Email, Name FROM User WHERE ID = %s" % user_ids[i][0])
       email =  cursor.fetchall()
-      oneDayAfterText = "Dear %s!\nYour task deadline was yesterday. For more info log in to your Rotator account." % email[1]
-      oneDayAfterTextID = send_message("me", create_message(email[0], oneDayAfterSubject, oneDayAfterText))
+      oneDayAfterText = "Dear %s!\nYour task deadline was yesterday. For more info log in to your Rotator account." % email[0][1]
+      oneDayAfterTextID = send_message("me", create_message(email[0][0], oneDayAfterSubject, oneDayAfterText))
 
-      
+    i = i + 1
+  
+  cursor.close()
+  connection.close()
+
 
 
 # helper functions
@@ -288,7 +274,7 @@ def get_credentials():
     Returns:
         Credentials, the obtained credential.
     """
-    home_dir = os.path.expanduser('~')
+    home_dir = os.path.expanduser('/var/www/')
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
