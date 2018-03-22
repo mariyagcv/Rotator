@@ -38,7 +38,7 @@
     confirm_password.onkeyup = validatePassword;
 
     </script>
-    <button type="submit" value="Submit" class = "container1">Sign Up</button>
+    <button type="submit" value="Submit" class = "container1" id = "signUpButton">Sign Up</button>
   </form>
 
  <!-- <h2 <span style="font-weight: 300"><a style="text-decoration:none; color:#000000; font-size: 20px;"> Already part of Rotator?
@@ -47,9 +47,17 @@
       <a id = "logIn" href="/Rotator/login.html" style="text-decoration:none; color:#000000; font-size: 20px;"><span style="font-weight: 600">Login now!</p>  
         <!--Button to accept terms and conditions-->
         <form action="action_page.php" method="get">
-          <input type="checkbox" name="acceptConditions" value="termsAndConditions"><p> By registering you agree to the <a href = ./about.html> terms and conditions</a></p><br>
-          <input type="submit" value="Submit" class = "btn">
+        <p> By registering you must agree to the <a href = ./about.html style="text-decoration:none; color:#000000; font-size: 20px; font-weight: bold;"> terms and conditions</a><input type="checkbox" name="acceptConditions" value="termsAndConditions" id = "checkMe"></p>
         </form>
+        
+        <script>
+          var checker = document.getElementById("checkMe");
+          var sendScript = document.getElementById("signUpButton");
+          sendScript.disabled = true;
+          checker.onchange = function( ) {
+            sendScript.disabled = false;
+            };
+         </script>
 
 
 
