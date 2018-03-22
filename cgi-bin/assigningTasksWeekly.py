@@ -133,7 +133,7 @@ def rank(new_groupID, new_dateOfCall):
   cursor.execute("SELECT User_ID, WorkScore FROM User_Group_Log WHERE Group_ID = %s" % (groupId) )
   userScores = cursor.fetchall() # (id, score) (id, score) ...
   for user in userScores:
-    cursor.execute("SELECT Deadline, Submitted, Submitted_Date, Verified, Verified_Date, Task_ID FROM User_Task_Log WHERE User_ID = %s" % (user[0])
+    cursor.execute("SELECT Deadline, Submitted, Submitted_Date, Verified, Verified_Date, Task_ID FROM User_Task_Log WHERE User_ID = %s" % (user[0]) )
     tasks = cursor.fetchall() # (dead, sub....) (d, s...)
     for task in tasks:
       cursor.execute("SELECT Difficulty FROM Task WHERE ID = %s " % (task[5]) )
@@ -148,6 +148,6 @@ def rank(new_groupID, new_dateOfCall):
           user[1] -= difficulty
       #?????
       user[1] -= 1000
-      cursor.execute("UPDATE User SET WorkScore = %s WHERE ID = %s" %s  (user[1], user[0])
+      cursor.execute("UPDATE User SET WorkScore = %s WHERE ID = %s" %s  (user[1], user[0]) )
       connection.commit()
   

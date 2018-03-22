@@ -130,6 +130,8 @@ else:
     ''' % (str(index+1), groupTasks[index][0], groupTasks[index][1], groupTasks[index][0], groupTasks[index][1])
 
   display += '''</table>
+  <h3> You want to assign the tasks for this week? Be careful and use the button below wisely! </h3>
+  <input type="button" style = "background: #DF7F7F; padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Assign tasks" onclick="window.location.href='/Rotator/cgi-bin/assigningTasks.cgi';">
   <h3> Do you want to add a new task? </h3>
                       <form action="addNewTask.cgi" method="post"> 
                         <h3> New task's name: </h3><input type="text" name="taskName" placeholder="Task name" class = "container1" style="background: white" id = "taskName">
