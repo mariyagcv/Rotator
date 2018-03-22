@@ -13,6 +13,7 @@ import mysql.connector
 if not 'HTTP_COOKIE' in os.environ:
   print '<h1>Are you logged in?</h1>'
   print ' <meta http-equiv="refresh" content="3;url=/Rotator/login.html" />  '
+  quit()
 else:
   c = Cookie.SimpleCookie()
   c.load(os.environ.get('HTTP_COOKIE'))
@@ -23,6 +24,7 @@ else:
   except KeyError:
     print '<h1>Are you logged in?</h1>'
     print ' <meta http-equiv="refresh" content="3;url=../login.html" />  '
+    quit()
 #end of that section 
 connection = mysql.connector.connect(
   user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
@@ -76,7 +78,7 @@ display = '''
 <body class = "inside">
 		<div class="container">
 			<h1>Settings</h1><br><br><br><br><br><br><br><br>
-			<div class="centered" style="width: 500px; position: relative;">
+			<div class="centered" style="width: 500px; position: relative; margin: 0 0 0 -250px;">
                 <br>
                 <button type="submit" value="Personal" onclick="document.getElementById('personalSettings').style.display='block'; document.getElementById('groupSettings').style.display='none'; " class = "container1">Personal</button>
                   <div id="personalSettings" style="display: none;">
@@ -98,6 +100,7 @@ else:
   cursor.execute("SELECT Name, Difficulty FROM Task WHERE Group_ID = %s ORDER BY Difficulty ASC" % (groupName[1]) )
   groupTasks = cursor.fetchall()
   display += '''
+              <h3>You want to share your group with others? Give them this number: %s </h3>
                     <form action="changeGroupName.cgi" method="post"> 
                       <h3> Group name: </h3><input type="text" name="groupName" value="%s" class = "container1" style="background: white" id = "groupName">
                   <button type="submit" value="Save" class = "container1" style="width: 150px;">Save</button>
@@ -107,16 +110,24 @@ else:
     <th class = "weekDays">ID</th>
     <th class = "weekDays">Difficulty</th>
     <th class = "weekDays">Name</th>
+    <th class = "weekDays">Remove</th>
   </tr>
-                  ''' % (groupName[0])
+                  ''' % (groupName[1], groupName[0])
   for index in range (0, len(groupTasks)):
     display += '''
   <tr>
     <td class = "weekDays"> %s </td>
     <td class = "task">%s</td>
     <td class = "task">%s</td>
+    <td class = "task">
+         <form action="removeTask.cgi" method="post"> 
+                <input type="text" name="taskName" value=%s class = "container1" style="display: none;">
+                <input type="text" name="taskDiff" value=%s class = "container1" style="display: none;">
+                <button type="submit" value="Remove" class = "container1" style="width: 150px;">Remove</button>
+         </form> 
+  </td
   </tr>
-    ''' % (str(index+1), groupTasks[index][0], groupTasks[index][1])
+    ''' % (str(index+1), groupTasks[index][0], groupTasks[index][1], groupTasks[index][0], groupTasks[index][1])
 
   display += '''</table>
   <h3> Do you want to add a new task? </h3>
@@ -147,9 +158,9 @@ else:
           </td
       </tr>
        ''' % (user[0], user[1], user[2])
-display +=  ''' </table>              
-			</div>
-		</div>
+  display +=  ''' </table>    
+	</div> '''
+display +=	'''		</div>
 
 </body>
 </div>''' 

@@ -13,7 +13,7 @@ try:
   password = dataField.getvalue('password')
 except:
   print "Content-Type: text/html\n\n"
-  print "'<link rel=\"stylesheet\" href=\"../styles.css\">'<TITLE>Login</TITLE><h1>You can't leave empty fields!</h1><meta http-equiv=\"refresh\" content=\"5;url=../login.html\" />"
+  print "'<link rel=\"stylesheet\" href=\"/Rotator/styles.css\">'<TITLE>Login</TITLE><h1>You can't leave empty fields!</h1><meta http-equiv=\"refresh\" content=\"5;url=/Rotator/login.html\" />"
   quit()
   
 
@@ -28,7 +28,7 @@ try:
   table =  cursor.fetchall()[0]
 except:
   print "Content-Type: text/html\n\n"
-  print "'<link rel=\"stylesheet\" href=\"../styles.css\">'<TITLE>Login</TITLE><h1>Wrong login!</h1><meta http-equiv=\"refresh\" content=\"5;url=../login.html\" />"
+  print "'<link rel=\"stylesheet\" href=\"../styles.css\">'<TITLE>Login</TITLE><h1>Wrong login!</h1><meta http-equiv=\"refresh\" content=\"5;url=/Rotator/login.html\" />"
   quit()
 
 hashed = table[0]
@@ -53,10 +53,10 @@ else:
   print "Content-Type: text/html\n\n"
   print "<h1>Wrong password!</h1>"
   print """
-  '<link rel="stylesheet" href="../styles.css">'
+  '<link rel="stylesheet" href="/Rotator/styles.css">'
 "<TITLE>Login</TITLE>"
     <head> 
-      <meta http-equiv="refresh" content="5;url=../login.html" /> 
+      <meta http-equiv="refresh" content="5;url=/Rotator/login.html" /> 
   </head> 
   """
   
