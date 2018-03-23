@@ -4,7 +4,7 @@ print
 print ''' <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic-ext" rel="stylesheet">   <meta charset="UTF-8">
 <link rel="stylesheet" href="/Rotator/styles.css"> '''
 
-#M: totally not sure about this but maybe print the other ones for popup as well?/ wtf why is there no head? wtf is going on, I'm confused
+#M: totally not sure about this but maybe print the other ones for popup as well?
 
 import cgi
 import Cookie
@@ -96,8 +96,17 @@ display = '''
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
-  function clicked() {
+  function clicked(name, deadline, difficulty, id) {
+    
+    $("#taskName").text("Task name:" + name);
+    $("#taskDeadline").text("Deadline:" + deadline);    
+    $("#taskDifficulty").text("Difficulty:" + difficulty);
+    document.getElementById('taskSubmit').onclick = function() {
+          window.location.href='/Rotator/cgi-bin/submitTask.cgi?name='+name+'&deadline='+deadline+'&difficulty='+difficulty+'&task_id='+id;
+       }
+   
     $( "#dialog" ).dialog();
+    
   };
   </script>
   </head>
@@ -122,11 +131,8 @@ display = '''
 <body class = "inside">
   <div class = "centeredTimeTable">
 
-  <h1>YOUR SCHEDULE</h1> <!-- WHY ISJN'T ROTATOR RESPONSIVE !??? -->
+  <h1>YOUR SCHEDULE</h1>
 
-
-<!-- BTW TIMETABLE IS NOT YET RESPONSIVE AND LOOKS SHIT ON PHONES
-     BUT TRY TO FIX LATER ON -->
   <table>
   <tr>
     <th class = "weekDays">Weekday</th>
@@ -139,10 +145,10 @@ display = '''
     <td class = "noTask">No task</td>
     <td class = '''
 if(len(mondayTask) == 0):
-  addition = ' "noTask">No task'
+  addition = ' "noTask" >No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in mondayTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
   </tr>
@@ -153,8 +159,8 @@ display += addition +'''</td>
 if(len(tuesdayTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in tuesdayTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
   </tr>
@@ -165,8 +171,8 @@ display += addition +'''</td>
 if(len(wednesdayTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in wednesdayTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
   </tr>
@@ -177,8 +183,8 @@ display += addition +'''</td>
 if(len(thursdayTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in thursdayTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
   </tr>
@@ -186,11 +192,11 @@ display += addition +'''</td>
     <td class = "weekDays">Friday</td>
     <td class = "noTask">No task</td>
     <td class = '''
-if(len(thursdayTask) == 0):
+if(len(fridayTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
-  for task in thursdayTask:
+  for task in fridayTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
   </tr>
@@ -200,17 +206,17 @@ display += addition +'''</td>
 if(len(satMorTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in satMorTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
     <td class = '''
 if(len(satEveTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in satEveTask:
-    addition += task.name + "</a><br>" #"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) 
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
+    addition += task.name + "</a><br>"
    
 display += addition +'''</td>
   </tr>
@@ -220,16 +226,16 @@ display += addition +'''</td>
 if(len(sunMorTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in sunMorTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
     <td class = '''
 if(len(sunEveTask) == 0):
   addition = ' "noTask">No task'
 else:
-  addition = ' "task" onclick="clicked()"> '
   for task in sunEveTask:
+    addition = ' "task" onclick="clicked(\'%s\', \'%s\', \'%s\', \'%s\')"> ' % (task.name, task.deadline, task.difficulty, task.id)
     addition += task.name + "<br>"
 display += addition +'''</td>
   </tr>
@@ -241,39 +247,20 @@ display += addition +'''</td>
 </div>
 
 <div id="dialog" title="Your task" style="display:none">
-  <p>Task name: 
+  <p id="taskName">Task name: 
 '''
 if len(tasks):
-  addition = task.name  + "<br>" 
-  display += addition + "<br>"
-
-  addition =  '''Deadline: ''' + task.deadline + "<br>" 
-  display += addition + "<br>"
-
-  #for some reason when I add task.difficulty it fucks it up, whytho 
-  addition =  '''Difficulty:  ''' + str(task.difficulty) + "<br>" 
-  display += addition + "<br>"
-    
-  #Rotator/cgi-bin/submitTask.cgi?task_id=1&deadline=2018-03-17%2020:00:00
-  #/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s
-  #"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
-
-  #onclick="window.location.href='/Rotator/cgi-bin/submitTask.cgi?name=task.name&deadline=task.deadline&difficulty=task.difficulty&task.id' ">'''
-
-  #"<a href='/Rotator/cgi-bin/viewTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s'> " % (task.name, task.deadline, task.difficulty,  task.id) + task.name + "</a><br>"
-
-  #maybe make the button prettier ! but that's not that urgent for now 
-
-  #THIS WORKS
-  #addition = '''<input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;
-   #border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" onclick="window.location.href='http://www.google.com';"/> "'''
-   
-  addition = '''<input type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc;
-   border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" onclick="window.location.href='/Rotator/cgi-bin/submitTask.cgi?name=%s&deadline=%s&difficulty=%s&task_id=%s ';"/> ''' % (task.name, task.deadline, task.difficulty,  task.id)
+  addition = task.name  + "</p>" 
+  display += addition
+  addition =  '''<p id="taskDeadline"> Deadline: ''' + task.deadline + "</p>" 
+  display += addition
+  addition =  '''<p id="taskDifficulty">Difficulty:  ''' + str(task.difficulty) + "</p>" 
+  display += addition
+  addition = '''<input id="taskSubmit" type="button" style = "background: #FF7F7F;padding: 12px 20px; margin: 8px 0; color: white;border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 13px; " value="Submit" /> '''
    # % (task.name, task.deadline, task.difficulty,  task.id) + "<br>"
   display += addition + "<br>"
 
-  #when I submit task, either from the popup or the hyperlink, I think it doesn't update it on the newsfeed :/ 
+  
 display +='''
 </p>
 </div>
