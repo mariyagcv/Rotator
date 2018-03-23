@@ -23,7 +23,7 @@ try:
 except:
   print "<h1>You can't leave empty fields!</h1><meta http-equiv=\"refresh\" content=\"3;url=/Rotator/register.html\" /> "
   quit()
-print "<H1>Redirecting...</H1>"
+
 password = dataField.getvalue("password")
 password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
 
@@ -32,6 +32,14 @@ connection = mysql.connector.connect(
     )
 
 cursor= connection.cursor(buffered = True)
+
+cursor.execute("SELECT Username FROM User WHERE Username = %s" % (username) )
+if(cursor.rowcount != 0):
+  print '''
+  <h1>Username taken! Choose another one!</h1>
+  <meta http-equiv="refresh" content="3;url=/Rotator/register.html" />
+  '''
+  quit()
 
 randomId = random.randint(1, 8388607)
 try:
@@ -50,7 +58,7 @@ VALUES (%s, %s, %s, %s, %s)
 connection.commit()
 cursor.close()
 connection.close()
-
+print "<H1>Redirecting...</H1>"
 print """
   <head> 
     <meta http-equiv="refresh" content="0;url=/Rotator/cgi-bin/timetable.cgi" /> 

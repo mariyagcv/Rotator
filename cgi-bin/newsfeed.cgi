@@ -58,7 +58,7 @@ cursor.execute("SELECT ID, Name, Difficulty FROM Task WHERE Group_ID = %s" % (gr
 
 tasks = cursor.fetchall() # tasks contains now tuples in form (id, name, diff)
 if len(tasks) == 0:
-  print '<h1> Your group has no tasks assingned to it!</h1><meta http-equiv="refresh" content="3;url=/Rotator/cgi-bin/settings.cgi" />'
+  print '<h1> Your group has no tasks assigned to it!</h1><meta http-equiv="refresh" content="3;url=/Rotator/cgi-bin/settings.cgi" />'
   quit()
 
 userTaskLogs = []

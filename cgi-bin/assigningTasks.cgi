@@ -50,7 +50,7 @@ else:
     print "<h1>There are no tasks to assign! Make sure you've added some!</h1><meta http-equiv=\"refresh\" content=\"3;url=./settings.cgi\" />"
     quit()
   query(groupId, datetime.now())
-  print "<h1>New tasks where added to your schedule!<h1>"
+  print "<h1>New tasks were added to your schedule!<h1>"
 #kill the connection to DB
 cursor.close()
 connection.close()
