@@ -37,7 +37,7 @@ def runHourly():
   submitted_ids = cursor.fetchall()
   for id in submitted_ids:
     mailResponseToSubmit(id[0])
-  cursor.execute("UPDATE User_Task_Log SET Submit_Sent = 1 WHERE Submitted = 1 AND Submit_Sent = 0")
+  cursor.execute("UPDATE User_Task_Log SET Submit_Sent = 1 WHERE Submitted = 1 AND Submit_Sent = 0;")
 
 
   # handle verifications
@@ -45,9 +45,9 @@ def runHourly():
   submitted_ids = cursor.fetchall()
   for id in submitted_ids:
     mailResponseToVerify(id[0])
-  cursor.execute("UPDATE User_Task_Log SET Verify_Sent = 1 WHERE  Submitted = 1 AND Verify_Sent = 0")
+  cursor.execute("UPDATE User_Task_Log SET Verify_Sent = 1 WHERE  Verified = 1 AND Verify_Sent = 0;")
 
-
+  connection.commit()
   cursor.close()
   connection.close()
 
