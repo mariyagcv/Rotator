@@ -66,8 +66,9 @@ userTaskLogs = []
 for i in range(0, len(users) ):
   try:
     cursor.execute("SELECT Deadline, Submitted, Submitted_Date, Verified, Verified_Date, User_ID, Task_ID FROM User_Task_Log WHERE User_ID = %s" % (users[i][0]) )
-    fetched = cursor.fetchall()[0]
-    userTaskLogs.append((fetched, users[i][1]) )
+    fetchedData = cursor.fetchall()
+    for fetched in fetchedData:
+    	userTaskLogs.append((fetched, users[i][1]) )
   except:
     pass
   # ((deadline, sub, sub_date, ver, ver_date, uID, tID), uName) (...)
@@ -94,6 +95,7 @@ html = '''
 <body class="inside">
   <h1 class = "taskClass">News Feed</h1>
   <div class = "tasks"> '''
+
 newsfeed =[]
 for userTaskLog in userTaskLogs:
   #for loop to find the name of the task

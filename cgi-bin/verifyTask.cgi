@@ -38,11 +38,10 @@ connection = mysql.connector.connect(
 cursor = connection.cursor(buffered = True)
 cursor.execute("SELECT User_ID, ID FROM User_Task_Log WHERE Submitted_Date = %s" % ("\'" + dataField.getvalue('submitteddate') + "\'") )
 userIds = cursor.fetchall()[0]
-if userIds[0] == userId:
+if userIds[0] == int(userId):
   print '''
   <h1> You can't verify your own task! </h1>
   '''
-  quit()
 else:
   cursor.execute("UPDATE User_Task_Log SET Verified = 1, Verified_Date = %s WHERE ID = %s" % ("\'" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\'", userIds[1]) )
   #mailResponseToVerify(userId)
