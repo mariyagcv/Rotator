@@ -50,18 +50,17 @@ def assignTasksToUsers(tasks, users):
       dateShift2 = dateShift - timedelta(days = (9 - i))
       dateToAdd = dateOfCall + dateShift2
       dateTemp = datetime(dateToAdd.year, dateToAdd.month, dateToAdd.day, 18, 0) 
-      
     deadlineArray.append(dateTemp)
-          
+  print len(users) 
   for i in range(0, len(tasks)):
-    x = i
-    if(x >= len(users)):
-      x = x - len(users)
+    x = i % len(users)
+  #  if(x >= len(users)):
+  #    x = x - len(users)
   #  tasks[i].deadline = deadlineArray[i]
    # users[x].add_task(tasks[i])
     #add the assignment of task to db
     #deadlineStr = deadlineArray[i].date().isoformat()
-    deadlineStr = deadlineArray[len(users[x].userTasks)].strftime("%Y-%m-%d %H:%M:%S")
+    deadlineStr = deadlineArray[len(users[x].userTasks) % 9].strftime("%Y-%m-%d %H:%M:%S")
     randomId = random.randint(1, 8388607)
     cursor.execute("SELECT ID FROM User_Task_Log WHERE ID = %s" % randomId)
     while(cursor.rowcount ):
@@ -110,6 +109,10 @@ def query(new_groupID, new_dateOfCall):
     newUsers.append(user)
     
   users = newUsers
+  
+  for user in users:
+    cursor.execute("SELECT Deadline FROM User_Task_Log WHERE User_ID = %s" % (user.id) )
+    user.userTasks = cursor.fetchall()
 
   assignTasksToUsers(tasks, users)
     #Since we, hopefully, handled adding the tasks to the users
