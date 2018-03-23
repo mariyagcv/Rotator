@@ -26,28 +26,26 @@ def runDaily():
   dailyEmailNotifications()
 
 #'constant' submit/verify notifications
-def runHourly()
+def runHourly():
   connection = mysql.connector.connect(
   user="mbyxadr2", database="2017_comp10120_z8", password="fA+h0m5_", host = "dbhost.cs.man.ac.uk"
   )
   cursor= connection.cursor(buffered=True)
 
   # handle submitions
-  cursor.execute("SELECT User_ID FROM User_Task_Log WHERE Submitted = 1, <Submition_Notified> = 0" 
-                         )
+  cursor.execute("SELECT User_ID FROM User_Task_Log WHERE Submitted = 1 AND Submit_Sent = 0")
   submitted_ids = cursor.fetchall()
   for id in submitted_ids:
     mailResponseToSubmit(id[0])
-  cursor.execute("UPDATE User_Task_Log SET <Submition_Notified> = 1,  Submitted = 1, <Submition_Notified> = 0")
+  cursor.execute("UPDATE User_Task_Log SET Submit_Sent = 1 WHERE Submitted = 1 AND Submit_Sent = 0")
 
 
   # handle verifications
-  cursor.execute("SELECT User_ID FROM User_Task_Log WHERE Verified = 1, <Verification_Notified> = 0" 
-                         )
+  cursor.execute("SELECT User_ID FROM User_Task_Log WHERE Verified = 1 AND Verify_Sent = 0")
   submitted_ids = cursor.fetchall()
   for id in submitted_ids:
     mailResponseToVerify(id[0])
-  cursor.execute("UPDATE User_Task_Log SET <Submition_Verification> = 1,  Submitted = 1, <Verification_Notified> = 0")
+  cursor.execute("UPDATE User_Task_Log SET Verify_Sent = 1 WHERE  Submitted = 1 AND Verify_Sent = 0")
 
 
   cursor.close()
@@ -56,12 +54,12 @@ def runHourly()
 
     
 schedule.every().monday.at('00:01').do(run)
-schedule.every().day.at('17:18').do(runDaily)
+schedule.every().day.at('15:15').do(runDaily)
 
 #real thing
 #schedule.every().hour.do(runHourly)
 #testing
-schedule.every(2).minutes.do(runHourly)
+schedule.every(0.5).minutes.do(runHourly)
 
 while 1:
     schedule.run_pending()
