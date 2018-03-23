@@ -83,8 +83,8 @@ display = '''
                 <button type="submit" value="Personal" onclick="document.getElementById('personalSettings').style.display='block'; document.getElementById('groupSettings').style.display='none'; " class = "container1">Personal</button>
                   <div id="personalSettings" style="display: none;">
                   <form action="changeSettings.cgi" method="post">
-                    <h3> Your name: </h3><input type="text" name="name" value=%s class = "container1" style="background: white" id = "username">
-                    <h3> Your e-mail: </h3><input type="text" name="email" value=%s class = "container1" style="background: white" id = "email">
+                    <h3> Your name: </h3><input type="text" name="name" value="%s" class = "container1" style="background: white" id = "username">
+                    <h3> Your e-mail: </h3><input type="text" name="email" value="%s" class = "container1" style="background: white" id = "email">
                     <h3> Your phone: </h3><input type="text" name="phone" value="%s" class = "container1" style="background: white" id = "phone">
                   <button type="submit" value="Save" class = "container1" style="width: 150px;">Save</button>
                   </form>
