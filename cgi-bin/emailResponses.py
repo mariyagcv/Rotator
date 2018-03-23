@@ -54,11 +54,6 @@ def mailResponseToSubmit(user_ID):
 
   # some needed housekeeping
 
-  # freeze notifications for this task
-#  if (len(draftIDs) != 0):
-#    for i in range(0, len(draftIDs) - 1):
-#      draftIDs[i]
-
   credentials = get_credentials()
   http = credentials.authorize(httplib2.Http())
   service = discovery.build('gmail', 'v1', http=http)
